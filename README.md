@@ -7,7 +7,8 @@
 5. [License](#license)
 
 ## Workflow Overview<a name="workflow"></a>
-&darr
+
+&#8595; *on-the-fly*
 * Monitors incoming files for on-the-fly processing of movies, micrographs, and particles.
 
 * Aligns movie frames and estimates CTF values using Relion schemes (Burt et al., 2024).
@@ -23,7 +24,8 @@
 * Picks particles from subtracted micrographs using crYOLO (Wagner et al., 2019).
 
 * Allows viewing of micrographs and picked coordinates (if available) to monitor progress.
-&uarr *on-the-fly*
+
+&#8593; *on-the-fly*
 
 * Prepares Relion .star files with the modified paths to the subtracted micrographs.
 
