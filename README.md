@@ -73,7 +73,7 @@ subflow &
 
 ![First click](https://github.com/sami-chaaban/subflow/blob/main/examples/Link-micrographs.png?raw=true "First click")
 
-![Second click](https://github.com/sami-chaaban/subflow/blob/main/examples/Display-micrographs.png?raw=true "Second click")
+![Second click](https://github.com/sami-chaaban/subflow/blob/main/examples/View-micrographs.png?raw=true "Second click")
 
 ## Troubleshooting<a name="troubleshooting"></a>
 
