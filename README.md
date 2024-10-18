@@ -41,11 +41,11 @@
 
 * Install subflow: **`pip install subflow`**
 
-* Follow the instructions to install [Relion](https://github.com/3dem/relion) and [cryoSPARC](guide.cryosparc.com/)
+* Follow the instructions to install [Relion](https://github.com/3dem/relion) and [cryoSPARC](https://guide.cryosparc.com/)
 
-* Install [crYOLO]() and [pyem](github.com/asarnow/pyem) into their own anaconda environments
+* Install [crYOLO]() and [pyem](https://github.com/asarnow/pyem) into their own anaconda environments
 
-* Download the [multi-curve-fitting](github.com/PengxinChai/multi-curve-fitting) and [filament subtraction](github.com/PengxinChai/tubulin-lattice-subtraction) scripts.
+* Download the [multi-curve-fitting](https://github.com/PengxinChai/multi-curve-fitting) and [filament subtraction](https://github.com/PengxinChai/tubulin-lattice-subtraction) scripts.
 
 * Edit the config.json file in the subflow installation to point to the correct crYOLO and pyem files, as well as the multi-curve-fitting and subtraction scripts
 
