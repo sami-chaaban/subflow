@@ -65,7 +65,7 @@ subflow &
 
 <img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Save-parameters.png?raw=true" alt="Save parameters" width="600"/>
 
-* Tabs with hollow cirtlces can be run on-the-fly (i.e. monitor files from the previous step). They turn into a black dot once they are running.
+* Tabs with hollow circles can be run on-the-fly (i.e. monitor files from the previous step). They turn into a black dot once they are running.
 
 <img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Start-link-movies.png?raw=true" alt="Start link movies" width="600"/>
 
