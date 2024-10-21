@@ -69,8 +69,6 @@ subflow &
 
 ![Start link movies](https://github.com/sami-chaaban/subflow/blob/main/examples/Start-link-movies.png?raw=true "Start link movies")
 
-![Start link micrographs](https://github.com/sami-chaaban/subflow/blob/main/examples/Start-link-micrographs.png?raw=true "Start link micrographs")
-
 * Clicking twice on a tab reveals a display tab to view the resulting micrographs for that step.
 
 ![First click](https://github.com/sami-chaaban/subflow/blob/main/examples/Link-micrographs.png?raw=true "First click")
