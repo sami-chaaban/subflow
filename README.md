@@ -59,21 +59,21 @@ Start the GUI by running the following with the conda environment active:
 subflow &
 ```
 
-![Main window](https://github.com/sami-chaaban/subflow/blob/main/examples/Main-window.png?raw=true "Main window")
+<img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Main-window.png?raw=true" alt="Main window" width="600"/>
 
 * After saving parameters to a file (e.g. subflow.txt), re-opening the GUI at a later date opens the previous parameters. Saving is not automatic.
 
-![Save parameters](https://github.com/sami-chaaban/subflow/blob/main/examples/Save-parameters.png?raw=true "Save parameters")
+<img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Save-parameters.png?raw=true" alt="Save parameters" width="600"/>
 
 * Tabs with hollow cirtlces can be run on-the-fly (i.e. monitor files from the previous step). They turn into a black dot once they are running.
 
-![Start link movies](https://github.com/sami-chaaban/subflow/blob/main/examples/Start-link-movies.png?raw=true "Start link movies")
+<img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Start-link-movies.png?raw=true" alt="Start link movies" width="600"/>
 
 * Clicking twice on a tab reveals a display tab to view the resulting micrographs for that step.
 
-![First click](https://github.com/sami-chaaban/subflow/blob/main/examples/Link-micrographs.png?raw=true "First click")
+<img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Link-micrographs.png?raw=true" alt="First click" width="600"/>
 
-![Second click](https://github.com/sami-chaaban/subflow/blob/main/examples/View-micrographs.png?raw=true "Second click")
+<img src="https://github.com/sami-chaaban/subflow/blob/main/examples/View-micrographs.png?raw=true" alt="Second click" width="600"/>
 
 ## Troubleshooting<a name="troubleshooting"></a>
 
