@@ -25,6 +25,7 @@ def display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todi
 
     cryolo_python = config.get("cryolo_python")
     cryolo_gui = config.get("cryolo_gui")
+    cryolo_boxmanager = config.get("cryolo_boxmanager")
 
     # Add your BoxManager logic here
     output_text_step3.delete(1.0, tk.END)  # Clear previous output
@@ -96,9 +97,7 @@ def display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todi
         try:
             cmd = [
                 cryolo_python,
-                '-u',
-                cryolo_gui,
-                '--ignore-gooey', 'boxmanager',
+                cryolo_boxmanager,
                 '-i', mictemp,
                 '-b', os.path.join(picks_dir,picktype)
             ]

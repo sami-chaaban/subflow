@@ -25,6 +25,7 @@ def displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, ent
 
     cryolo_python = config.get("cryolo_python")
     cryolo_gui = config.get("cryolo_gui")
+    cryolo_boxmanager = config.get("cryolo_boxmanager")
 
     output_text_step9.delete(1.0, tk.END)  # Clear previous output
     output_text_step9.insert(tk.END, "BoxManager started...\n")
@@ -116,18 +117,14 @@ def displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, ent
             if showcoordsflag:
                 cmd = [
                     cryolo_python,
-                    '-u',
-                    cryolo_gui,
-                    '--ignore-gooey', 'boxmanager',
+                    cryolo_boxmanager,
                     '-i', mictemp,
                     '-b', subtemp
                 ]
             else:
                 cmd = [
                     cryolo_python,
-                    '-u',
-                    cryolo_gui,
-                    '--ignore-gooey', 'boxmanager',
+                    cryolo_boxmanager,
                     '-i', mictemp,
                     ]
 

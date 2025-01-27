@@ -45,7 +45,7 @@
 
 * Follow the instructions to install [Relion](https://github.com/3dem/relion) and [cryoSPARC](https://guide.cryosparc.com/)
 
-* Install [crYOLO](https://cryolo.readthedocs.io/en/stable/index.html) and [pyem](https://github.com/asarnow/pyem) into their own anaconda environments
+* Install [crYOLO 1.9.1](https://cryolo.readthedocs.io/en/stable/index.html) and [pyem](https://github.com/asarnow/pyem) into their own anaconda environments
 
 * Download the [multi-curve-fitting](https://github.com/PengxinChai/multi-curve-fitting) and [filament subtraction](https://github.com/PengxinChai/tubulin-lattice-subtraction) scripts.
 
@@ -77,9 +77,9 @@ subflow &
 
 ## Troubleshooting<a name="troubleshooting"></a>
 
-* If Subflow crashes while Relion jobs are rerunning in the Preproc tab, they will continue to run. You can check this by running the Relion GUI. You may need to kill those jobs before being able to run Preproc again, or just continue in the Relion GUI.
+* If Subflow crashes while Relion jobs are running in the Preproc tab, they will continue to run. You can check this by checking the Relion GUI. You may need to kill those jobs before being able to run Preproc again, or just continue in the Relion GUI.
 
-* Since cryosparc-tools is set to version 4.6.0 in the installation, your cryoSPARC installation must be 4.6.0. Otherwise cryosparc-tools needs to be downgraded or upgraded.
+* Since cryosparc-tools is set to version 4.6.0 in the installation, your cryoSPARC installation must be 4.6.0. Otherwise cryosparc-tools needs to be downgraded/upgraded.
 
 ## License<a name="license"></a>
 

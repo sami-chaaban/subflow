@@ -23,6 +23,7 @@ def displaycorr(output_text_step0d, entry_corrmics, entry_todisplay_step0d, sele
 
     cryolo_python = config.get("cryolo_python")
     cryolo_gui = config.get("cryolo_gui")
+    cryolo_boxmanager = config.get("cryolo_boxmanager")
 
     output_text_step0d.delete(1.0, tk.END)  # Clear previous output
     output_text_step0d.insert(tk.END, "Display with BoxManager started...\n")
@@ -90,9 +91,7 @@ def displaycorr(output_text_step0d, entry_corrmics, entry_todisplay_step0d, sele
 
             cmd = [
                 cryolo_python,
-                '-u',
-                cryolo_gui,
-                '--ignore-gooey', 'boxmanager',
+                cryolo_boxmanager,
                 '-i', mictemp,
                 ]
 

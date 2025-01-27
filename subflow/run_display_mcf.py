@@ -24,6 +24,7 @@ def displaymcf(output_text_step5, entry_mcfedmics_dir, entry_mcfcoordinate_dir, 
 
     cryolo_python = config.get("cryolo_python")
     cryolo_gui = config.get("cryolo_gui")
+    cryolo_boxmanager = config.get("cryolo_boxmanager")
 
     output_text_step5.delete(1.0, tk.END)  # Clear previous output
     output_text_step5.insert(tk.END, "BoxManager started...\n")
@@ -110,9 +111,7 @@ def displaymcf(output_text_step5, entry_mcfedmics_dir, entry_mcfcoordinate_dir, 
         try:
             cmd = [
                 cryolo_python,
-                '-u',
-                cryolo_gui,
-                '--ignore-gooey', 'boxmanager',
+                cryolo_boxmanager,
                 '-i', mictemp,
                 '-b', mcftemp
             ]

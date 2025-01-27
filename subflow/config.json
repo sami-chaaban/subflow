@@ -1,6 +1,7 @@
 {
     "cryolo_python": "/lmb/home/chaaban/anaconda3/envs/cryolo/bin/python",
     "cryolo_gui": "/lmb/home/chaaban/anaconda3/envs/cryolo/bin/cryolo_gui.py",
+    "cryolo_boxmanager": "/lmb/home/chaaban/anaconda3/envs/cryolo/bin/cryolo_boxmanager.py",
     "subtract_script": "/lmb/home/ksingh/scripts/tubulin-lattice-subtraction-main/bin/mrc_2d_curve_weaken",
     "mcf_script": "/lmb/home/ksingh/scripts/multi-curve-fitting-main/bin/mcurve_fitting_2D.py",
     "csparc2star_python": "/lmb/home/chaaban/anaconda3/envs/pyem2/bin/python3.7",

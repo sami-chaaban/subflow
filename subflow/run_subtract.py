@@ -72,11 +72,11 @@ class SubtractOperation:
 
         self.output_text = output_text
 
-        subtract_script = self.config.get("subtract_script")
+        self.subtract_script = self.config.get("subtract_script")
 
-        if not os.path.exists(subtract_script):
+        if not os.path.exists(self.subtract_script):
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END,f"Error: Subtraction script does not exist: {subtract_script}\n")
+            output_text.insert(tk.END,f"Error: Subtraction script does not exist: {self.subtract_script}\n")
             output_text.see(tk.END)
             return
 
@@ -241,7 +241,7 @@ class SubtractOperation:
 
         try:
             result = subprocess.run([
-                subtract_script,
+                self.subtract_script,
                 origintemp,
                 mask,
                 coordstosub,
