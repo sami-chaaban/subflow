@@ -13,14 +13,14 @@ class CryoloPickOperation:
 
     def __init__(self):
 
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
-            self.config = json.load(config_file)
-
         self.cryolo_pick_process = None
         self.cryolo_config_process = None
         self.pick_running = False
 
-    def pick(self, output_text, defaultbox, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset, resetpicks_button, notebook, jobalias):
+    def pick(self, output_text, defaultbox, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset, resetpicks_button, notebook, entry_config, jobalias):
+
+        with open(entry_config.get(), 'r') as config_file:
+            self.config = json.load(config_file)
 
         cryolo_python = self.config.get("cryolo_python")
         cryolo_gui = self.config.get("cryolo_gui")

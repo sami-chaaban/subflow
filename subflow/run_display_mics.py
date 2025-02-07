@@ -12,20 +12,20 @@ from scipy.fft import rfftn, irfftn
 from scipy.ndimage import fourier_gaussian
 import json
 
-def displaycorr(output_text_step0d, entry_corrmics, entry_todisplay_step0d, selected_order_step0d, filter_checkbox):
+def displaycorr(output_text_step0d, entry_corrmics, entry_todisplay_step0d, selected_order_step0d, filter_checkbox, entry_config):
     global corrmics_dir
     corrmics_dir = entry_corrmics.get()
     order = selected_order_step0d.get()
     filterflag = filter_checkbox.get()
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    with open(entry_config.get(), 'r') as config_file:
         config = json.load(config_file)
 
     cryolo_python = config.get("cryolo_python")
     cryolo_gui = config.get("cryolo_gui")
     cryolo_boxmanager = config.get("cryolo_boxmanager")
 
-    output_text_step0d.delete(1.0, tk.END)  # Clear previous output
+    output_text_step0d.delete(1.0, tk.END)
     output_text_step0d.insert(tk.END, "Display with BoxManager started...\n")
 
     def run_boxmanager():

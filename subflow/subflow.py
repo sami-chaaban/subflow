@@ -19,7 +19,7 @@ from subflow.run_subtract import SubtractOperation
 from subflow.run_display_subtract import displaysub
 from subflow.run_fixstar import fixstar
 from subflow.run_display_complexpicks import displaycomplex
-from subflow.run_merge import submerge, pickmerge
+from subflow.run_merge import submerge, pickmerge, picklink
 from subflow.run_extract import relionimport, relionextract
 from subflow.run_csparc import cscreateworkspace, csimportparts, csimportvols, cshetero, csnonunif, cs2star
 
@@ -33,6 +33,7 @@ import pandas as pd
 from starparser import fileparser
 from subflow import updategui
 from subflow.updategui import flagmap
+import json
 
 def gui():
 
@@ -193,30 +194,30 @@ def gui():
             if not updategui.get_update_flag("eertotif"): 
                 eertif(output_text_stepm1, entry_eer_dir, entry_eergroups, entry_tif_dir, browse_tif_dir, entry_eerprocs, convertgain_checkbox, checkboxm1, entry_gainm1, eertif_button, browse_button_gainm1, stop_eertif_button, notebook)
         if not updategui.get_update_flag("preprocess"):
-            corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain, notebook)
+            corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain, notebook, entry_config)
         if not updategui.get_update_flag("linkcorr"):
             sync(entry_sourcemics, entry_syncmics, entry_suffix, output_text_step1, sync_button, stop_sync_button, browse_button_sourcemics, selected_linktype, radio_option_linktype_corr, radio_option_linktype_other, entry_sourcemics_elsewhere, notebook)
         if not updategui.get_update_flag("pickfil"):
-            pick_operation_fil.pick(output_text_step2, 253, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset,resetpicks_button, notebook, "pickfil")
+            pick_operation_fil.pick(output_text_step2, 253, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset,resetpicks_button, notebook, entry_config, "pickfil")
         if not updategui.get_update_flag("mcf"):
-            mcf_operation.mcf(output_text_step4, entry_coordinate_dir, entry_suffix_step4, entry_pixel_size_step4, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, notebook, "mcf")
+            mcf_operation.mcf(output_text_step4, entry_coordinate_dir, entry_suffix_step4, entry_pixel_size_step4, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, notebook, entry_config, "mcf")
         if not updategui.get_update_flag("split"):
             split_operation.split(output_text_step6, entry_splitcoordinate_dir, entry_splitvalue, split_button, stop_split_button, browse_button_split_coordinate_dir, entry_tosplitmics_dir, browse_button_tosplitmics, notebook, "split")
         if not updategui.get_update_flag("sub"):
-            subtract_operation.subtract(output_text_step8, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask, radio_option_manual, radio_option_auto, entry_pixel_size_step8, entry_mask, entry_searchstart, entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub, browse_button_coordstosub, browse_button_mask, notebook, "sub")
+            subtract_operation.subtract(output_text_step8, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask, radio_option_manual, radio_option_auto, entry_pixel_size_step8, entry_mask, entry_searchstart, entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub, browse_button_coordstosub, browse_button_mask, notebook, entry_config, "sub")
         if not updategui.get_update_flag("pickcomp"):
-            pick_operation_complex.pick(output_text_step11, 638, entry_submicrographs_topick, entry_pixel_size_subpick, entry_cryolo_model_complex, entry_threshold_complex, entry_projectname_complex, entry_pickname_complex, entry_gpu_complex, pickcomplex_button, stop_pickcomplex_button, browse_button_submicrographs_topick, browse_button_cryolo_model_complex, entry_picksubset_complex, resetcomplexpicks_button, notebook, "pickcomp")
+            pick_operation_complex.pick(output_text_step11, 638, entry_submicrographs_topick, entry_pixel_size_subpick, entry_cryolo_model_complex, entry_threshold_complex, entry_projectname_complex, entry_pickname_complex, entry_gpu_complex, pickcomplex_button, stop_pickcomplex_button, browse_button_submicrographs_topick, browse_button_cryolo_model_complex, entry_picksubset_complex, resetcomplexpicks_button, notebook, entry_config, "pickcomp")
         if doublesub_var.get() == 1:
             if not updategui.get_update_flag("pickfil2"):
-                pick_operation_fil2.pick(output_text_step16, 253, entry_micrographs_topick16, entry_pixel_size16, entry_cryolo_model16, entry_threshold16, entry_projectname16, entry_pickname16, entry_gpu16, pick_button16, stop_pick_button16, browse_button_micrographs_topick16, browse_button_cryolo_model16, entry_picksubset16, resetpicks16_button, notebook, "pickfil2")
+                pick_operation_fil2.pick(output_text_step16, 253, entry_micrographs_topick16, entry_pixel_size16, entry_cryolo_model16, entry_threshold16, entry_projectname16, entry_pickname16, entry_gpu16, pick_button16, stop_pick_button16, browse_button_micrographs_topick16, browse_button_cryolo_model16, entry_picksubset16, resetpicks16_button, notebook, entry_config, "pickfil2")
             if not updategui.get_update_flag("mcf2"):
-                mcf_operation18.mcf(output_text_step18, entry_coordinate_dir18, entry_suffix_step18, entry_pixel_size_step18, entry_samplestep18, entry_anglechange18, entry_minseed18, entry_polynomial18, mcf_button18, stop_mcf_button18, browse_coordinate_dir18, entry_tomcfmics_dir18, browse_button_tomcfmics18, notebook, "mcf2")
+                mcf_operation18.mcf(output_text_step18, entry_coordinate_dir18, entry_suffix_step18, entry_pixel_size_step18, entry_samplestep18, entry_anglechange18, entry_minseed18, entry_polynomial18, mcf_button18, stop_mcf_button18, browse_coordinate_dir18, entry_tomcfmics_dir18, browse_button_tomcfmics18, notebook, entry_config, "mcf2")
             if not updategui.get_update_flag("split2"):
                 split_operation20.split(output_text_step20, entry_splitcoordinate_dir20, entry_splitvalue20, split_button20, stop_split_button20, browse_button_split_coordinate_dir20, entry_tosplitmics_dir20, browse_button_tosplitmics20, notebook, "split2")
             if not updategui.get_update_flag("sub2"):
-                subtract_operation22.subtract(output_text_step22, entry_mictosub_dir22, entry_coordstosub22, entry_suboutput22, selected_automask22, radio_option_manual22, radio_option_auto22, entry_pixel_size_step22, entry_mask22, entry_searchstart22, entry_searchend22, subtract_button22, stop_subtract_button22, browse_button_mictosub22, browse_button_coordstosub22, browse_button_mask22, notebook, "sub2")
+                subtract_operation22.subtract(output_text_step22, entry_mictosub_dir22, entry_coordstosub22, entry_suboutput22, selected_automask22, radio_option_manual22, radio_option_auto22, entry_pixel_size_step22, entry_mask22, entry_searchstart22, entry_searchend22, subtract_button22, stop_subtract_button22, browse_button_mictosub22, browse_button_coordstosub22, browse_button_mask22, notebook, entry_config, "sub2")
             if not updategui.get_update_flag("pickcomp2"):
-                pick_operation_complex24.pick(output_text_step24, 638, entry_submicrographs_topick24, entry_pixel_size_subpick24, entry_cryolo_model_complex24, entry_threshold_complex24, entry_projectname_complex24, entry_pickname_complex24, entry_gpu_complex24, pickcomplex_button24, stop_pickcomplex_button24, browse_button_submicrographs_topick24, browse_button_cryolo_model_complex24, entry_picksubset_complex24, resetcomplexpicks24_button, notebook, "pickcomp2")
+                pick_operation_complex24.pick(output_text_step24, 638, entry_submicrographs_topick24, entry_pixel_size_subpick24, entry_cryolo_model_complex24, entry_threshold_complex24, entry_projectname_complex24, entry_pickname_complex24, entry_gpu_complex24, pickcomplex_button24, stop_pickcomplex_button24, browse_button_submicrographs_topick24, browse_button_cryolo_model_complex24, entry_picksubset_complex24, resetcomplexpicks24_button, notebook, entry_config, "pickcomp2")
 
     def stopall():
         if updategui.get_update_flag("linkmov"):
@@ -322,6 +323,16 @@ def gui():
             notebook.tab(24, state="normal")
             notebook.tab(25, state="hidden")
             notebook.tab(26, state="normal")
+            label_step10b.grid_remove()
+            label1_step10b.grid_remove()
+            label_firstpicks_single.grid_remove()
+            entry_firstpicks_single.grid_remove()
+            browse_button_firstpickssingle.grid_remove()
+            label_outputpickmerge_single.grid_remove()
+            entry_outputpickmerge_single.grid_remove()
+            browse_button_outputpickmergesingle.grid_remove()
+            linksingle_button.grid_remove()
+            output_text_step10b.grid_remove()
         else:
             notebook.tab(16, state="hidden")
             notebook.tab(17, state="hidden")
@@ -334,6 +345,17 @@ def gui():
             notebook.tab(24, state="hidden")
             notebook.tab(25, state="hidden")
             notebook.tab(26, state="hidden")
+            label_step10b.grid(row=10, column=0, columnspan=2, padx=10, pady=8)
+            label1_step10b.grid(row=11, column=0, columnspan=2, padx=10, pady=8)
+            label_firstpicks_single.grid(row=12, column=0, padx=10, pady=3, sticky="e")
+            entry_firstpicks_single.grid(row=12, column=1, padx=10, pady=3, sticky="ew")
+            browse_button_firstpickssingle.grid(row=12, column=2, padx=10, pady=3)
+            label_outputpickmerge_single.grid(row=13, column=0, padx=10, pady=3, sticky="e")
+            entry_outputpickmerge_single.grid(row=13, column=1, padx=10, pady=3, sticky="ew")
+            browse_button_outputpickmergesingle.grid(row=13, column=2, padx=10, pady=3)
+            linksingle_button.grid(row=14, column=0, columnspan=2, padx=10, pady=3)
+            output_text_step10b.grid(row=15, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+
 
         global show_adv
         if not show_adv:
@@ -436,6 +458,15 @@ def gui():
     ##############
     #BROWSE
 
+
+    def browse_directory_absolute(entry_widget):
+        current_directory = os.getcwd() 
+        directory_path = filedialog.askdirectory(initialdir=current_directory)
+        if directory_path:
+            absolute_path = os.path.abspath(directory_path)
+            entry_widget.delete(0, tk.END) 
+            entry_widget.insert(0, absolute_path) 
+
     def browse_directory(entry_widget):
         current_directory = os.getcwd() 
         directory_path = filedialog.askdirectory(initialdir=current_directory)
@@ -451,6 +482,15 @@ def gui():
             relative_path = os.path.relpath(file_path, current_directory)
             entry_widget.delete(0, tk.END) 
             entry_widget.insert(0, relative_path)
+
+    def browse_and_checkconfig(entry_widget, output_widget):
+        current_directory = os.getcwd() 
+        file_path = filedialog.askopenfilename(initialdir=current_directory)
+        if file_path:
+            absolute_path = os.path.abspath(file_path)
+            entry_widget.delete(0, tk.END) 
+            entry_widget.insert(0, absolute_path)
+            check_config(None, absolute_path, output_widget)
 
     ##############
     #FOCUS-OUT
@@ -564,6 +604,43 @@ def gui():
         fordisplay.insert(0, os.path.join("Cryolo", project, pick))
         formerge.delete(0, tk.END)
         formerge.insert(0, os.path.join("Cryolo", project, pick, "STAR"))
+
+    def pickdir_focusout_reset(eventpickreset, resetpicksbutton, projectname, pickname):
+        check_reset(resetpicksbutton, os.path.join("Cryolo", projectname, pickname, "nopicklist.txt"))
+
+    def check_config(eventconfig, configdir, outputbox):
+
+        outputbox.delete(1.0, tk.END)
+
+        badconfigflag=False
+
+        try:
+            with open(configdir, 'r') as config_file:
+                configdata = json.load(config_file)
+
+                for jsonkey in ["cryolo_python", "cryolo_gui", "cryolo_boxmanager", "subtract_script", "mcf_script", "csparc2star_python", "csparc2star_script", "relion_corr_job", "relion_ctf_job", "relion_extract_job"]:
+
+                    jsonkeydata = configdata.get(jsonkey)
+
+                    if jsonkey in ["relion_corr_job", "relion_ctf_job", "relion_extract_job"] and jsonkeydata == "":
+                        continue
+
+                    if not os.path.exists(jsonkeydata):
+                        outputbox.insert(tk.END, f"Warning: path for {jsonkey} does not exist: {jsonkeydata}\n\n")
+                        badconfigflag=True
+
+        except Exception as e:
+
+            outputbox.delete(1.0, tk.END)
+            outputbox.insert(tk.END, f"Could not load json data from {configdir}: {str(e)}\n")
+            badconfigflag=True
+
+        if not badconfigflag:
+            outputbox.insert(tk.END, f"Configuration file loaded: {configdir}:\n\n")
+            with open(configdir, 'r') as file:
+                for line in file:
+                    outputbox.insert(tk.END, line)
+
 
     ##############
     #Utils
@@ -750,6 +827,9 @@ def gui():
                 paramsdict["output_text_hq"].insert(tk.END, "--------------------------------------------------\n")
 
                 with open(file_path, 'w') as file:
+
+                    writeandshow(paramsdict["output_text_hq"], f"Configuration : {paramsdict['entry_config'].get()}\n")
+
                     if paramsdict["doublesub_var"].get() == 1:
                         writeandshow(paramsdict["output_text_hq"], f"Double subtraction : yes\n")
                     else:
@@ -954,6 +1034,8 @@ def gui():
             if not os.path.exists(file_path):
                 return
 
+            file_path = os.path.abspath(file_path)
+
             loadparams(paramsdict, file_path)
 
         except Exception as e:
@@ -971,7 +1053,11 @@ def gui():
             pipeline_param, pipeline_value = line.split(" : ")
             pipeline_value = pipeline_value.strip("\n")
 
-            if pipeline_param == "Double subtraction":
+            if pipeline_param == "Configuration":
+                paramsdict["entry_config"].delete(0, tk.END)
+                paramsdict["entry_config"].insert(0, pipeline_value)
+
+            elif pipeline_param == "Double subtraction":
                 if pipeline_value == "yes":
                     paramsdict["doublesub_var"].set(1)
                 else:
@@ -1441,6 +1527,64 @@ def gui():
         with open("Subflow/subflow-last.txt", 'w') as file:
             file.write(file_path)
 
+    ##########
+    #PARAMS
+
+    notebook.tab(0, text="  SUBFLOW  ")
+    label_hq = ttk.Label(tabs[0], text=f"SUBFLOW {subflow.__version__}", style="title.TLabel")
+    label_hq.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+
+    loadsettings_button = ttk.Button(tabs[0], text="Load parameters", command=lambda: browseload_params(paramsdict))
+    loadsettings_button.grid(row=1, column=0, padx=10, columnspan=1, pady=10, sticky="ew")
+
+    savesettings_button = ttk.Button(tabs[0], text="Save parameters", command=lambda: saveparams(paramsdict))
+    savesettings_button.grid(row=1, column=1, padx=10, columnspan=1, pady=10, sticky="ew")
+
+    label_config = ttk.Label(tabs[0], text="Configuration")
+    label_config.grid(row=2, column=0, padx=10, pady=3, sticky="e")
+
+    entry_config = ttk.Entry(tabs[0], font=common_font)
+    entry_config.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json"))
+    entry_config.grid(row=2, column=1, padx=10, pady=3, sticky="ew")
+
+    ###browse button moved below output
+
+    eer_var = tk.IntVar()
+
+    label_eer_checkbox = ttk.Label(tabs[0], text="EER")
+    label_eer_checkbox.grid(row=3, column=0, padx=10, pady=2, sticky="e")
+
+    eer_switch = ttk.Checkbutton(tabs[0], variable=eer_var, command=toggle_eer_propagate, style="Switch.TCheckbutton")
+    eer_switch.grid(row=3, column=1, padx=10, pady=2, sticky="w")
+
+    doublesub_var = tk.IntVar()
+
+    label_doublesub_checkbox = ttk.Label(tabs[0], text="Subtract twice")
+    label_doublesub_checkbox.grid(row=4, column=0, padx=10, pady=2, sticky="e")
+
+    doublesub_switch = ttk.Checkbutton(tabs[0], variable=doublesub_var, command=toggle_doublesub_propagate, style="Switch.TCheckbutton")
+    doublesub_switch.grid(row=4, column=1, padx=10, pady=4, sticky="w")
+
+    startall_button = ttk.Button(tabs[0], text="Start all", command=startall)
+    startall_button.grid(row=5, column=0, padx=10, pady=4, sticky="ew")
+
+    stopall_button = ttk.Button(tabs[0], text="Stop all", command=stopall)
+    stopall_button.grid(row=5, column=1, padx=10, pady=4, sticky="ew")
+
+    output_text_hq = tk.Text(tabs[0], height=6, width=40, font=output_font)
+    output_text_hq.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+
+    ##
+    browse_button_config = ttk.Button(tabs[0], text="...", command=lambda: browse_and_checkconfig(entry_config, output_text_hq))
+    browse_button_config.grid(row=2, column=2, padx=10, pady=3)
+    ##
+
+    tabs[0].grid_columnconfigure(0, weight=1)
+    tabs[0].grid_columnconfigure(1, weight=1)
+
+    tabs[0].grid_rowconfigure(6, weight=1)
+
+
     ##############
     #TABS
 
@@ -1459,7 +1603,7 @@ def gui():
         entry_scopesourcemovies.insert(0, "/path/to/Images-Disc1/Grid*")
         entry_scopesourcemovies.grid(row=1, column=1, padx=10, pady=3, sticky="ew")
 
-        browse_button_scopesourcemovies = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_scopesourcemovies))
+        browse_button_scopesourcemovies = ttk.Button(tabs[t], text="...", command=lambda: browse_directory_absolute(entry_scopesourcemovies))
         browse_button_scopesourcemovies.grid(row=1, column=2, padx=10, pady=3)
 
         label_syncmovies = ttk.Label(tabs[t], text="Directory to link to")
@@ -1679,7 +1823,7 @@ def gui():
 
         #########
 
-        corr_button = ttk.Button(tabs[t], text="Preprocess", command=lambda: corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain, notebook))
+        corr_button = ttk.Button(tabs[t], text="Preprocess", command=lambda: corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain, notebook, entry_config))
         corr_button.grid(row=11, column=0, padx=10, pady=5, sticky="e")
 
         stop_corr_button = ttk.Button(tabs[t], text="Stop", command=lambda: stop_corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain))
@@ -1826,8 +1970,8 @@ def gui():
         label_corrmics = ttk.Label(tabs[t], text="Micrograph directory")
         label_corrmics.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_corrmics = ttk.Entry(tabs[t], textvariable=typedmicrographs, font=common_font)
-        #entry_corrmics.insert(0, globalmicrographs)
+        entry_corrmics = ttk.Entry(tabs[t], font=common_font)
+        entry_corrmics.insert(0, globalmicrographs)
         entry_corrmics.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_corrmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_corrmics))
@@ -1869,7 +2013,7 @@ def gui():
         filter_checkbox_button = tk.Checkbutton(tabs[t], variable=filter_checkbox)
         filter_checkbox_button.grid(row=8, column=1, padx=10, pady=3, sticky="w")
 
-        display_corrmics_button = ttk.Button(tabs[t], text="Display", command=lambda: displaycorr(output_text_step0d, entry_corrmics, entry_todisplay_step0d, selected_order_step0d, filter_checkbox))
+        display_corrmics_button = ttk.Button(tabs[t], text="Display", command=lambda: displaycorr(output_text_step0d, entry_corrmics, entry_todisplay_step0d, selected_order_step0d, filter_checkbox, entry_config))
         display_corrmics_button.grid(row=9, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step0d = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -1964,7 +2108,7 @@ def gui():
 
         pick_operation_fil = CryoloPickOperation()
 
-        pick_button = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_fil.pick(output_text_step2, 253, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset,resetpicks_button, notebook, "pickfil"))
+        pick_button = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_fil.pick(output_text_step2, 253, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset,resetpicks_button, notebook, entry_config, "pickfil"))
         pick_button.grid(row=9, column=0, padx=10, pady=5, sticky="e")
 
         stop_pick_button = ttk.Button(tabs[t], text="Stop", command=lambda: pick_operation_fil.stop_pick(output_text_step2))
@@ -2000,8 +2144,8 @@ def gui():
         label_pickedmics_dir = ttk.Label(tabs[t], text="Micrograph directory")
         label_pickedmics_dir.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_pickedmics_dir = ttk.Entry(tabs[t], textvariable=typedmicrographs, font=common_font)
-        #entry_pickedmics_dir.insert(0, "Micrographs")
+        entry_pickedmics_dir = ttk.Entry(tabs[t], font=common_font)
+        entry_pickedmics_dir.insert(0, globalmicrographs)
         entry_pickedmics_dir.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_pickedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_pickedmics_dir))
@@ -2065,7 +2209,7 @@ def gui():
         filter_forpicks_checkbox_button = tk.Checkbutton(tabs[t], variable=filter_forpicks_checkbox)
         filter_forpicks_checkbox_button.grid(row=9, column=1, padx=10, pady=3, sticky="w")
 
-        display_picks_button = ttk.Button(tabs[t], text="Display picks", command=lambda: display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todisplay_step3, selected_order_step3, selected_picktype, filter_forpicks_checkbox))
+        display_picks_button = ttk.Button(tabs[t], text="Display picks", command=lambda: display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todisplay_step3, selected_order_step3, selected_picktype, filter_forpicks_checkbox, entry_config))
         display_picks_button.grid(row=10, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step3 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -2152,7 +2296,7 @@ def gui():
 
         mcf_operation = MCFOperation()
 
-        mcf_button = ttk.Button(tabs[t], text="Fit", command=lambda: mcf_operation.mcf(output_text_step4, entry_coordinate_dir, entry_suffix_step4, entry_pixel_size_step4, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, notebook, "mcf"))
+        mcf_button = ttk.Button(tabs[t], text="Fit", command=lambda: mcf_operation.mcf(output_text_step4, entry_coordinate_dir, entry_suffix_step4, entry_pixel_size_step4, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, notebook, entry_config, "mcf"))
         mcf_button.grid(row=9, column=0, padx=10, pady=5, sticky="e")
 
         stop_mcf_button = ttk.Button(tabs[t], text="Stop", command=lambda: mcf_operation.stop_mcf(output_text_step4, entry_coordinate_dir, entry_suffix_step4, entry_pixel_size_step4, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, "mcf"))
@@ -2189,8 +2333,8 @@ def gui():
         label_mcfedmics_dir = ttk.Label(tabs[t], text="Micrograph directory")
         label_mcfedmics_dir.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_mcfedmics_dir = ttk.Entry(tabs[t], textvariable=typedmicrographs, font=common_font)
-        #entry_mcfedmics_dir.insert(0, "Micrographs")
+        entry_mcfedmics_dir = ttk.Entry(tabs[t], font=common_font)
+        entry_mcfedmics_dir.insert(0, globalmicrographs)
         entry_mcfedmics_dir.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_mcfedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_mcfedmics_dir))
@@ -2243,7 +2387,7 @@ def gui():
         filter_formcf_checkbox_button5 = tk.Checkbutton(tabs[t], variable=filter_formcf_checkbox5)
         filter_formcf_checkbox_button5.grid(row=7, column=1, padx=10, pady=3, sticky="w")
 
-        display_mcfedpicks_button = ttk.Button(tabs[t], text="Display fit", command=lambda: displaymcf(output_text_step5, entry_mcfedmics_dir, entry_mcfcoordinate_dir, entry_todisplay_step5, selected_order_step5, filter_formcf_checkbox5))
+        display_mcfedpicks_button = ttk.Button(tabs[t], text="Display fit", command=lambda: displaymcf(output_text_step5, entry_mcfedmics_dir, entry_mcfcoordinate_dir, entry_todisplay_step5, selected_order_step5, filter_formcf_checkbox5, entry_config))
         display_mcfedpicks_button.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step5 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -2334,8 +2478,8 @@ def gui():
         label_splitedmics_dir = ttk.Label(tabs[t], text="Micrograph directory")
         label_splitedmics_dir.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_splitedmics_dir = ttk.Entry(tabs[t], textvariable=typedmicrographs, font=common_font)
-        #entry_splitedmics_dir.insert(0, "Micrographs")
+        entry_splitedmics_dir = ttk.Entry(tabs[t], font=common_font)
+        entry_splitedmics_dir.insert(0, globalmicrographs)
         entry_splitedmics_dir.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_splitedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_splitedmics_dir))
@@ -2380,7 +2524,7 @@ def gui():
         filter_forsplit_checkbox_button7 = tk.Checkbutton(tabs[t], variable=filter_forsplit_checkbox7)
         filter_forsplit_checkbox_button7.grid(row=7, column=1, padx=10, pady=3, sticky="w")
 
-        display_splitedpicks_button = ttk.Button(tabs[t], text="Display splits", command=lambda: displaysplit(output_text_step7, entry_splitedmics_dir, entry_splitcoordinate_dir_step7, entry_todisplay_step7, selected_order_step7, filter_forsplit_checkbox7))
+        display_splitedpicks_button = ttk.Button(tabs[t], text="Display splits", command=lambda: displaysplit(output_text_step7, entry_splitedmics_dir, entry_splitcoordinate_dir_step7, entry_todisplay_step7, selected_order_step7, filter_forsplit_checkbox7, entry_config))
         display_splitedpicks_button.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step7 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -2447,7 +2591,7 @@ def gui():
 
         selected_automask.set("Auto")
 
-        label_mask = ttk.Label(tabs[t], text="Mask file")
+        label_mask = ttk.Label(tabs[t], text="Mask file (if manual)")
         label_mask.grid(row=6, column=0, padx=10, pady=2, sticky="e")
 
         entry_mask = ttk.Entry(tabs[t], font=common_font)
@@ -2479,7 +2623,7 @@ def gui():
 
         subtract_operation = SubtractOperation()
 
-        subtract_button = ttk.Button(tabs[t], text="Subtract", command=lambda: subtract_operation.subtract(output_text_step8, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask, radio_option_manual, radio_option_auto, entry_pixel_size_step8, entry_mask, entry_searchstart, entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub, browse_button_coordstosub, browse_button_mask, notebook, "sub"))
+        subtract_button = ttk.Button(tabs[t], text="Subtract", command=lambda: subtract_operation.subtract(output_text_step8, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask, radio_option_manual, radio_option_auto, entry_pixel_size_step8, entry_mask, entry_searchstart, entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub, browse_button_coordstosub, browse_button_mask, notebook, "sub", entry_config))
         subtract_button.grid(row=10, column=0, padx=10, pady=5, sticky="e")
 
         stop_subtract_button = ttk.Button(tabs[t], text="Stop", command=lambda: subtract_operation.stop_subtract(output_text_step8, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask, radio_option_manual, radio_option_auto, entry_pixel_size_step8, entry_mask, entry_searchstart, entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub, browse_button_coordstosub, browse_button_mask, "sub"))
@@ -2514,8 +2658,8 @@ def gui():
         label_subtractedmics = ttk.Label(tabs[t], text="Micrograph directory")
         label_subtractedmics.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_subtractedmics = ttk.Entry(tabs[t], textvariable=typedsubmicrographs, font=common_font)
-        #entry_subtractedmics.insert(0, "SubtractedMicrographs")
+        entry_subtractedmics = ttk.Entry(tabs[t], font=common_font)
+        entry_subtractedmics.insert(0, globalsubmicrographs)
         entry_subtractedmics.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_subtractedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_subtractedmics))
@@ -2576,7 +2720,7 @@ def gui():
         filter_forsub_checkbox_button9 = tk.Checkbutton(tabs[t], variable=filter_forsub_checkbox9)
         filter_forsub_checkbox_button9.grid(row=8, column=1, padx=10, pady=3, sticky="w")
 
-        display_subtractedmics_button = ttk.Button(tabs[t], text="Display subtraction", command=lambda: displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, entry_splitcoordinate_step9, entry_todisplay_step9, selected_order_step9, filter_forsub_checkbox9))
+        display_subtractedmics_button = ttk.Button(tabs[t], text="Display subtraction", command=lambda: displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, entry_splitcoordinate_step9, entry_todisplay_step9, selected_order_step9, filter_forsub_checkbox9, entry_config))
         display_subtractedmics_button.grid(row=9, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step9 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -2668,7 +2812,7 @@ def gui():
 
         pick_operation_complex = CryoloPickOperation()
 
-        pickcomplex_button = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_complex.pick(output_text_step11, 638, entry_submicrographs_topick, entry_pixel_size_subpick, entry_cryolo_model_complex, entry_threshold_complex, entry_projectname_complex, entry_pickname_complex, entry_gpu_complex, pickcomplex_button, stop_pickcomplex_button, browse_button_submicrographs_topick, browse_button_cryolo_model_complex, entry_picksubset_complex, resetcomplexpicks_button, notebook, "pickcomp"))
+        pickcomplex_button = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_complex.pick(output_text_step11, 638, entry_submicrographs_topick, entry_pixel_size_subpick, entry_cryolo_model_complex, entry_threshold_complex, entry_projectname_complex, entry_pickname_complex, entry_gpu_complex, pickcomplex_button, stop_pickcomplex_button, browse_button_submicrographs_topick, browse_button_cryolo_model_complex, entry_picksubset_complex, resetcomplexpicks_button, notebook, entry_config, "pickcomp"))
         pickcomplex_button.grid(row=9, column=0, padx=10, pady=5, sticky="e")
 
         stop_pickcomplex_button = ttk.Button(tabs[t], text="Stop", command=lambda: pick_operation_complex.stop_pick(output_text_step11))
@@ -2709,7 +2853,8 @@ def gui():
         label_complex_pickedmics_dir = ttk.Label(tabs[t], text="Micrograph directory")
         label_complex_pickedmics_dir.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_complex_pickedmics_dir = ttk.Entry(tabs[t], textvariable=typedsubmicrographs, font=common_font)
+        entry_complex_pickedmics_dir = ttk.Entry(tabs[t], font=common_font)
+        entry_complex_pickedmics_dir.insert(0, globalsubmicrographs)
         entry_complex_pickedmics_dir.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_complex_pickedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_complex_pickedmics_dir))
@@ -2864,7 +3009,7 @@ def gui():
 
         pick_operation_fil2 = CryoloPickOperation()
 
-        pick_button16 = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_fil2.pick(output_text_step16, 253, entry_micrographs_topick16, entry_pixel_size16, entry_cryolo_model16, entry_threshold16, entry_projectname16, entry_pickname16, entry_gpu16, pick_button16, stop_pick_button16, browse_button_micrographs_topick16, browse_button_cryolo_model16, entry_picksubset16, resetpicks16_button, notebook, "pickfil2"))
+        pick_button16 = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_fil2.pick(output_text_step16, 253, entry_micrographs_topick16, entry_pixel_size16, entry_cryolo_model16, entry_threshold16, entry_projectname16, entry_pickname16, entry_gpu16, pick_button16, stop_pick_button16, browse_button_micrographs_topick16, browse_button_cryolo_model16, entry_picksubset16, resetpicks16_button, notebook, entry_config, "pickfil2"))
         pick_button16.grid(row=9, column=0, padx=10, pady=5, sticky="e")
 
         stop_pick_button16 = ttk.Button(tabs[t], text="Stop", command=lambda: pick_operation_fil2.stop_pick(output_text_step16))
@@ -2900,8 +3045,8 @@ def gui():
         label_pickedmics_dir17 = ttk.Label(tabs[t], text="Micrograph directory")
         label_pickedmics_dir17.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_pickedmics_dir17 = ttk.Entry(tabs[t], textvariable=typedsubmicrographs, font=common_font)
-        #entry_pickedmics_dir17.insert(0, "Micrographs")
+        entry_pickedmics_dir17 = ttk.Entry(tabs[t], font=common_font)
+        entry_pickedmics_dir17.insert(0, globalsubmicrographs)
         entry_pickedmics_dir17.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_pickedmics17 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_pickedmics_dir17))
@@ -2963,7 +3108,7 @@ def gui():
         filter_forpicks_checkbox_button17 = tk.Checkbutton(tabs[t], variable=filter_forpicks_checkbox17)
         filter_forpicks_checkbox_button17.grid(row=9, column=1, padx=10, pady=3, sticky="w")
 
-        display_picks_button = ttk.Button(tabs[t], text="Display picks", command=lambda: display(output_text_step17, entry_pickedmics_dir17, entry_picks_dir17, entry_todisplay_step17, selected_order_step17, selected_picktype17, filter_forpicks_checkbox17))
+        display_picks_button = ttk.Button(tabs[t], text="Display picks", command=lambda: display(output_text_step17, entry_pickedmics_dir17, entry_picks_dir17, entry_todisplay_step17, selected_order_step17, selected_picktype17, filter_forpicks_checkbox17, entry_config))
         display_picks_button.grid(row=10, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step17 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -3051,7 +3196,7 @@ def gui():
 
         mcf_operation18 = MCFOperation()
 
-        mcf_button18 = ttk.Button(tabs[t], text="Fit", command=lambda: mcf_operation18.mcf(output_text_step18, entry_coordinate_dir18, entry_suffix_step18, entry_pixel_size_step18, entry_samplestep18, entry_anglechange18, entry_minseed18, entry_polynomial18, mcf_button18, stop_mcf_button18, browse_coordinate_dir18, entry_tomcfmics_dir18, browse_button_tomcfmics18, notebook, "mcf2"))
+        mcf_button18 = ttk.Button(tabs[t], text="Fit", command=lambda: mcf_operation18.mcf(output_text_step18, entry_coordinate_dir18, entry_suffix_step18, entry_pixel_size_step18, entry_samplestep18, entry_anglechange18, entry_minseed18, entry_polynomial18, mcf_button18, stop_mcf_button18, browse_coordinate_dir18, entry_tomcfmics_dir18, browse_button_tomcfmics18, notebook, entry_config, "mcf2"))
         mcf_button18.grid(row=9, column=0, padx=10, pady=5, sticky="e")
 
         stop_mcf_button18 = ttk.Button(tabs[t], text="Stop", command=lambda: mcf_operation18.stop_mcf(output_text_step18, entry_coordinate_dir18, entry_suffix_step18, entry_pixel_size_step18, entry_samplestep18, entry_anglechange18, entry_minseed18, entry_polynomial18, mcf_button18, stop_mcf_button18, browse_coordinate_dir18, entry_tomcfmics_dir18, browse_button_tomcfmics18, "mcf2"))
@@ -3088,8 +3233,8 @@ def gui():
         label_mcfedmics_dir19 = ttk.Label(tabs[t], text="Micrograph directory")
         label_mcfedmics_dir19.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_mcfedmics_dir19 = ttk.Entry(tabs[t], textvariable=typedsubmicrographs, font=common_font)
-        #entry_mcfedmics_dir19.insert(0, "Micrographs")
+        entry_mcfedmics_dir19 = ttk.Entry(tabs[t], font=common_font)
+        entry_mcfedmics_dir19.insert(0, globalsubmicrographs)
         entry_mcfedmics_dir19.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_mcfedmics19 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_mcfedmics_dir19))
@@ -3142,7 +3287,7 @@ def gui():
         filter_formcf_checkbox_button19 = tk.Checkbutton(tabs[t], variable=filter_formcf_checkbox19)
         filter_formcf_checkbox_button19.grid(row=7, column=1, padx=10, pady=3, sticky="w")
 
-        display_mcfedpicks_button19 = ttk.Button(tabs[t], text="Display fit", command=lambda: displaymcf(output_text_step19, entry_mcfedmics_dir19, entry_mcfcoordinate_dir19, entry_todisplay_step19, selected_order_step19, filter_formcf_checkbox19))
+        display_mcfedpicks_button19 = ttk.Button(tabs[t], text="Display fit", command=lambda: displaymcf(output_text_step19, entry_mcfedmics_dir19, entry_mcfcoordinate_dir19, entry_todisplay_step19, selected_order_step19, filter_formcf_checkbox19, entry_config))
         display_mcfedpicks_button19.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step19 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -3234,8 +3379,8 @@ def gui():
         label_splitedmics_dir21 = ttk.Label(tabs[t], text="Micrograph directory")
         label_splitedmics_dir21.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_splitedmics_dir21 = ttk.Entry(tabs[t], textvariable=typedsubmicrographs, font=common_font)
-        #entry_splitedmics_dir21.insert(0, "Micrographs")
+        entry_splitedmics_dir21 = ttk.Entry(tabs[t], font=common_font)
+        entry_splitedmics_dir21.insert(0, globalsubmicrographs)
         entry_splitedmics_dir21.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_splitedmics21 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_splitedmics_dir21))
@@ -3286,7 +3431,7 @@ def gui():
         filter_forsplit_checkbox_button21 = tk.Checkbutton(tabs[t], variable=filter_forsplit_checkbox21)
         filter_forsplit_checkbox_button21.grid(row=7, column=1, padx=10, pady=3, sticky="w")
 
-        display_splitedpicks_button21 = ttk.Button(tabs[t], text="Display splits", command=lambda: displaysplit(output_text_step21, entry_splitedmics_dir21, entry_splitcoordinate_dir_step21, entry_todisplay_step21, selected_order_step21, filter_forsplit_checkbox21))
+        display_splitedpicks_button21 = ttk.Button(tabs[t], text="Display splits", command=lambda: displaysplit(output_text_step21, entry_splitedmics_dir21, entry_splitcoordinate_dir_step21, entry_todisplay_step21, selected_order_step21, filter_forsplit_checkbox21, entry_config))
         display_splitedpicks_button21.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step21 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -3353,7 +3498,7 @@ def gui():
 
         selected_automask22.set("Auto")
 
-        label_mask22 = ttk.Label(tabs[t], text="Mask file")
+        label_mask22 = ttk.Label(tabs[t], text="Mask file (if manual)")
         label_mask22.grid(row=6, column=0, padx=10, pady=2, sticky="e")
 
         entry_mask22 = ttk.Entry(tabs[t], font=common_font)
@@ -3385,7 +3530,7 @@ def gui():
 
         subtract_operation22 = SubtractOperation()
 
-        subtract_button22 = ttk.Button(tabs[t], text="Subtract", command=lambda: subtract_operation22.subtract(output_text_step22, entry_mictosub_dir22, entry_coordstosub22, entry_suboutput22, selected_automask22, radio_option_manual22, radio_option_auto22, entry_pixel_size_step22, entry_mask22, entry_searchstart22, entry_searchend22, subtract_button22, stop_subtract_button22, browse_button_mictosub22, browse_button_coordstosub22, browse_button_mask22, notebook, "sub2"))
+        subtract_button22 = ttk.Button(tabs[t], text="Subtract", command=lambda: subtract_operation22.subtract(output_text_step22, entry_mictosub_dir22, entry_coordstosub22, entry_suboutput22, selected_automask22, radio_option_manual22, radio_option_auto22, entry_pixel_size_step22, entry_mask22, entry_searchstart22, entry_searchend22, subtract_button22, stop_subtract_button22, browse_button_mictosub22, browse_button_coordstosub22, browse_button_mask22, notebook, "sub2", entry_config))
         subtract_button22.grid(row=10, column=0, padx=10, pady=5, sticky="e")
 
         stop_subtract_button22 = ttk.Button(tabs[t], text="Stop", command=lambda: subtract_operation22.stop_subtract(output_text_step22, entry_mictosub_dir22, entry_coordstosub22, entry_suboutput22, selected_automask22, radio_option_manual22, radio_option_auto22, entry_pixel_size_step22, entry_mask22, entry_searchstart22, entry_searchend22, subtract_button22, stop_subtract_button22, browse_button_mictosub22, browse_button_coordstosub22, browse_button_mask22, "sub2"))
@@ -3420,8 +3565,8 @@ def gui():
         label_subtractedmics23 = ttk.Label(tabs[t], text="Micrograph directory")
         label_subtractedmics23.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_subtractedmics23 = ttk.Entry(tabs[t], textvariable=typedsubmicrographs2, font=common_font)
-        #entry_subtractedmics23.insert(0, "SubtractedMicrographs")
+        entry_subtractedmics23 = ttk.Entry(tabs[t], font=common_font)
+        entry_subtractedmics23.insert(0, globalsubmicrographs2)
         entry_subtractedmics23.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_subtractedmics23 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_subtractedmics23))
@@ -3482,7 +3627,7 @@ def gui():
         filter_forsub_checkbox_button23 = tk.Checkbutton(tabs[t], variable=filter_forsub_checkbox23)
         filter_forsub_checkbox_button23.grid(row=8, column=1, padx=10, pady=3, sticky="w")
 
-        display_subtractedmics_button23 = ttk.Button(tabs[t], text="Display subtraction", command=lambda: displaysub(output_text_step23, entry_subtractedmics23, showcoords_checkbox23, entry_splitcoordinate_step23, entry_todisplay_step23, selected_order_step23, filter_forsub_checkbox23))
+        display_subtractedmics_button23 = ttk.Button(tabs[t], text="Display subtraction", command=lambda: displaysub(output_text_step23, entry_subtractedmics23, showcoords_checkbox23, entry_splitcoordinate_step23, entry_todisplay_step23, selected_order_step23, filter_forsub_checkbox23, entry_config))
         display_subtractedmics_button23.grid(row=9, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step23 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -3574,7 +3719,7 @@ def gui():
 
         pick_operation_complex24 = CryoloPickOperation()
 
-        pickcomplex_button24 = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_complex24.pick(output_text_step24, 638, entry_submicrographs_topick24, entry_pixel_size_subpick24, entry_cryolo_model_complex24, entry_threshold_complex24, entry_projectname_complex24, entry_pickname_complex24, entry_gpu_complex24, pickcomplex_button24, stop_pickcomplex_button24, browse_button_submicrographs_topick24, browse_button_cryolo_model_complex24, entry_picksubset_complex24, resetcomplexpicks24_button, notebook, "pickcomp2"))
+        pickcomplex_button24 = ttk.Button(tabs[t], text="Pick", command=lambda: pick_operation_complex24.pick(output_text_step24, 638, entry_submicrographs_topick24, entry_pixel_size_subpick24, entry_cryolo_model_complex24, entry_threshold_complex24, entry_projectname_complex24, entry_pickname_complex24, entry_gpu_complex24, pickcomplex_button24, stop_pickcomplex_button24, browse_button_submicrographs_topick24, browse_button_cryolo_model_complex24, entry_picksubset_complex24, resetcomplexpicks24_button, notebook, entry_config, "pickcomp2"))
         pickcomplex_button24.grid(row=9, column=0, padx=10, pady=5, sticky="e")
 
         stop_pickcomplex_button24 = ttk.Button(tabs[t], text="Stop", command=lambda: pick_operation_complex24.stop_pick(output_text_step24))
@@ -3615,7 +3760,8 @@ def gui():
         label_complex_pickedmics_dir25 = ttk.Label(tabs[t], text="Micrograph directory")
         label_complex_pickedmics_dir25.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
-        entry_complex_pickedmics_dir25 = ttk.Entry(tabs[t], textvariable=typedsubmicrographs2, font=common_font)
+        entry_complex_pickedmics_dir25 = ttk.Entry(tabs[t], font=common_font)
+        entry_complex_pickedmics_dir25.insert(0, globalsubmicrographs2)
         entry_complex_pickedmics_dir25.grid(row=1, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_complex_pickedmics25 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_complex_pickedmics_dir25))
@@ -3798,7 +3944,7 @@ def gui():
         label_step10 = ttk.Label(tabs[t], text="Modify micrograph star file", style="title.TLabel")
         label_step10.grid(row=0, column=0, columnspan=2, padx=10, pady=8)
 
-        label1_step10 = ttk.Label(tabs[t], text="Run only after subtraction (or merging if subtrated twice) is complete")
+        label1_step10 = ttk.Label(tabs[t], text="Run only after subtraction is complete\nIf merging two subtractions, wait until the merge has finished", justify="center")
         label1_step10.grid(row=1, column=0, columnspan=2, padx=10, pady=8)
 
         label_micstar = ttk.Label(tabs[t], text="Micrograph star file")
@@ -3822,7 +3968,7 @@ def gui():
         label_submicsdir.grid(row=4, column=0, padx=10, pady=3, sticky="e")
 
         entry_submicsdir = ttk.Entry(tabs[t], font=common_font)
-        entry_submicsdir.insert(0, "SubtractedMicrographs")
+        entry_submicsdir.insert(0, globalsubmicrographs)
         entry_submicsdir.grid(row=4, column=1, padx=10, pady=3, sticky="ew")
 
         browse_button_submicsdir = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_submicsdir))
@@ -3838,21 +3984,53 @@ def gui():
         fixstar_button = ttk.Button(tabs[t], text="Fix", command=lambda: fixstar(output_text_step10, entry_micstar, entry_prefix, entry_submicsdir, entry_outstar, fixstar_button))
         fixstar_button.grid(row=6, column=0, columnspan=2, padx=10, pady=3)
 
-        output_text_step10 = tk.Text(tabs[t], height=5, width=40, font=output_font)
+        output_text_step10 = tk.Text(tabs[t], height=2, width=40, font=output_font)
         output_text_step10.grid(row=7, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
         output_text_step10.config(highlightthickness=1, highlightbackground="grey")
 
-        scrollbar10 = ttk.Scrollbar(tabs[t], orient=tk.VERTICAL)
-        output_text_step10.config(yscrollcommand=scrollbar10.set)
-        scrollbar10.config(command=output_text_step10.yview)
-        scrollbar10.grid(row=7, column=2, rowspan=1, sticky="ns")
+        # scrollbar10 = ttk.Scrollbar(tabs[t], orient=tk.VERTICAL)
+        # output_text_step10.config(yscrollcommand=scrollbar10.set)
+        # scrollbar10.config(command=output_text_step10.yview)
+        # scrollbar10.grid(row=7, column=2, rowspan=1, sticky="ns")
 
+        label_step10b = ttk.Label(tabs[t], text="Link picked complexes", style="title.TLabel")
+        label_step10b.grid(row=10, column=0, columnspan=2, padx=10, pady=8)
 
-        # Allow both columns to expand when resizing
+        label1_step10b = ttk.Label(tabs[t], text="Run only after picking is complete\nIt places .star files with the subtracted micrographs", justify="center")
+        label1_step10b.grid(row=11, column=0, columnspan=2, padx=10, pady=8)
+
+        label_firstpicks_single = ttk.Label(tabs[t], text="Complex picks")
+        label_firstpicks_single.grid(row=12, column=0, padx=10, pady=3, sticky="e")
+
+        entry_firstpicks_single = ttk.Entry(tabs[t], font=common_font)
+        entry_firstpicks_single.insert(0, "Cryolo/Complex/allpicks_0p28/STAR")
+        entry_firstpicks_single.grid(row=12, column=1, padx=10, pady=3, sticky="ew")
+
+        browse_button_firstpickssingle = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_firstpicks_single))
+        browse_button_firstpickssingle.grid(row=12, column=2, padx=10, pady=3)
+
+        label_outputpickmerge_single = ttk.Label(tabs[t], text="Output directory")
+        label_outputpickmerge_single.grid(row=13, column=0, padx=10, pady=3, sticky="e")
+
+        entry_outputpickmerge_single = ttk.Entry(tabs[t], font=common_font)
+        entry_outputpickmerge_single.insert(0, globalsubmicrographs)
+        entry_outputpickmerge_single.grid(row=13, column=1, padx=10, pady=3, sticky="ew")
+
+        browse_button_outputpickmergesingle = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_outputpickmerge_single))
+        browse_button_outputpickmergesingle.grid(row=13, column=2, padx=10, pady=3)
+
+        linksingle_button = ttk.Button(tabs[t], text="Link", command=lambda: picklink(output_text_step10b, entry_firstpicks_single, entry_outputpickmerge_single,browse_button_firstpickssingle, browse_button_outputpickmergesingle, linksingle_button))
+        linksingle_button.grid(row=14, column=0, columnspan=2, padx=10, pady=3)
+
+        output_text_step10b = tk.Text(tabs[t], height=2, width=40, font=output_font)
+        output_text_step10b.grid(row=15, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+        output_text_step10b.config(highlightthickness=1, highlightbackground="grey")
+
         tabs[t].grid_columnconfigure(0, weight=1)
         tabs[t].grid_columnconfigure(1, weight=1)
 
         tabs[t].grid_rowconfigure(7, weight=1)
+        tabs[t].grid_rowconfigure(15, weight=1)
 
     t+=1
     notebook.tab(t, text="      Extract     ")
@@ -3872,8 +4050,7 @@ def gui():
         entry_subcoords.insert(0, "SubtractedMicrographs/*.star")
         entry_subcoords.grid(row=2, column=1, padx=10, pady=3, sticky="ew")
 
-        import_button = ttk.Button(tabs[t], text="Import", command=lambda: relionimport(output_text_step11a, entry_micstar11, entry_subcoords))
-        import_button.grid(row=3, column=0, columnspan=2, padx=10, pady=3)
+        #RELION IMPORT BUTTON MOVED BELOW, ROW 3
 
         output_text_step11a = tk.Text(tabs[t], height=5, width=40, font=output_font)
         output_text_step11a.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
@@ -3913,7 +4090,12 @@ def gui():
         entry_importjob.insert(0, "job004")
         entry_importjob.grid(row=9, column=1, padx=10, pady=3, sticky="ew")
 
-        extract_button = ttk.Button(tabs[t], text="Extract", command=lambda: relionextract(output_text_step11b, entry_micstar11, entry_importjob, entry_boxsize, entry_rescaledbox))
+        #
+        import_button = ttk.Button(tabs[t], text="Import", command=lambda: relionimport(output_text_step11a, entry_micstar11, entry_subcoords, entry_importjob,))
+        import_button.grid(row=3, column=0, columnspan=2, padx=10, pady=3)
+        #
+
+        extract_button = ttk.Button(tabs[t], text="Extract", command=lambda: relionextract(output_text_step11b, entry_micstar11, entry_importjob, entry_boxsize, entry_rescaledbox, entry_config))
         extract_button.grid(row=10, column=0, columnspan=2, padx=10, pady=3)
 
         output_text_step11b = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -4050,52 +4232,10 @@ def gui():
         tabs[t].grid_rowconfigure(15, weight=1)
 
     ##########
-    #PARAMS
-
-    notebook.tab(0, text="  SUBFLOW  ")
-    label_hq = ttk.Label(tabs[0], text=f"SUBFLOW {subflow.__version__}", style="title.TLabel")
-    label_hq.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
-
-    loadsettings_button = ttk.Button(tabs[0], text="Load parameters", command=lambda: browseload_params(paramsdict))
-    loadsettings_button.grid(row=1, column=0, padx=10, columnspan=1, pady=10, sticky="ew")
-
-    savesettings_button = ttk.Button(tabs[0], text="Save parameters", command=lambda: saveparams(paramsdict))
-    savesettings_button.grid(row=1, column=1, padx=10, columnspan=1, pady=10, sticky="ew")
-
-    eer_var = tk.IntVar()
-
-    label_eer_checkbox = ttk.Label(tabs[0], text="EER")
-    label_eer_checkbox.grid(row=2, column=0, padx=10, pady=2, sticky="e")
-
-    eer_switch = ttk.Checkbutton(tabs[0], variable=eer_var, command=toggle_eer_propagate, style="Switch.TCheckbutton")
-    eer_switch.grid(row=2, column=1, padx=10, pady=2, sticky="w")
-
-    doublesub_var = tk.IntVar()
-
-    label_doublesub_checkbox = ttk.Label(tabs[0], text="Subtract twice")
-    label_doublesub_checkbox.grid(row=3, column=0, padx=10, pady=2, sticky="e")
-
-    doublesub_switch = ttk.Checkbutton(tabs[0], variable=doublesub_var, command=toggle_doublesub_propagate, style="Switch.TCheckbutton")
-    doublesub_switch.grid(row=3, column=1, padx=10, pady=4, sticky="w")
-
-    startall_button = ttk.Button(tabs[0], text="Start all", command=startall)
-    startall_button.grid(row=4, column=0, padx=10, pady=4, sticky="ew")
-
-    stopall_button = ttk.Button(tabs[0], text="Stop all", command=stopall)
-    stopall_button.grid(row=4, column=1, padx=10, pady=4, sticky="ew")
-
-    output_text_hq = tk.Text(tabs[0], height=5, width=40, font=output_font)
-    output_text_hq.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
-
-    tabs[0].grid_columnconfigure(0, weight=1)
-    tabs[0].grid_columnconfigure(1, weight=1)
-
-    tabs[0].grid_rowconfigure(5, weight=1)
-
-    ##########
 
     paramsdict = {
         "output_text_hq": output_text_hq,
+        "entry_config": entry_config,
         "eer_var": eer_var,
         "doublesub_var": doublesub_var,
         "entry_scopesourcemovies": entry_scopesourcemovies,
@@ -4263,6 +4403,26 @@ def gui():
     entry_projectname_complex24.bind("<FocusOut>", lambda eventpickcomplex: pickdir_complex_focusout(eventpickcomplex, entry_projectname_complex24.get(), entry_pickname_complex24.get(), entry_complex_picks_dir25, entry_secondpicks))
     entry_pickname_complex24.bind("<FocusOut>", lambda eventpickcomplex: pickdir_complex_focusout(eventpickcomplex, entry_projectname_complex24.get(), entry_pickname_complex24.get(), entry_complex_picks_dir25, entry_secondpicks))
     entry_threshold_complex24.bind("<FocusOut>", lambda eventthresh: thresh_focusout_complex(eventthresh, 2, entry_projectname_complex24.get(), entry_threshold_complex24.get(), entry_complex_picks_dir25, entry_secondpicks))
+
+    entry_projectname.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetpicks_button, entry_projectname.get(), entry_pickname.get())
+, add="+")
+    entry_pickname.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetpicks_button, entry_projectname.get(), entry_pickname.get())
+, add="+")
+    entry_projectname_complex.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetcomplexpicks_button, entry_projectname_complex.get(), entry_pickname_complex.get())
+, add="+")
+    entry_pickname_complex.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetcomplexpicks_button, entry_projectname_complex.get(), entry_pickname_complex.get())
+, add="+")
+    entry_projectname16.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetpicks16_button, entry_projectname16.get(), entry_pickname16.get())
+, add="+")
+    entry_pickname16.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetpicks16_button, entry_projectname16.get(), entry_pickname16.get())
+, add="+")
+    entry_projectname_complex24.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetcomplexpicks24_button, entry_projectname_complex24.get(), entry_pickname_complex24.get())
+, add="+")
+    entry_pickname_complex24.bind("<FocusOut>", lambda eventpickreset: pickdir_focusout_reset(eventpickreset, resetcomplexpicks24_button, entry_projectname_complex24.get(), entry_pickname_complex24.get())
+, add="+")
+
+    entry_config.bind("<FocusOut>", lambda eventconfig: check_config(eventconfig, entry_config.get(), output_text_hq))
+    entry_config.bind("<Return>", lambda eventconfig: check_config(eventconfig, entry_config.get(), output_text_hq), add="+")
 
     typedmovies.trace("w", set_movies)
     typedpixelsize.trace("w", set_pixelsize)

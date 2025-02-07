@@ -12,7 +12,7 @@ from scipy.fft import rfftn, irfftn
 from scipy.ndimage import fourier_gaussian
 import json
 
-def displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, entry_splitcoordinate_step9, entry_todisplay_step9, selected_order_step9, filter_forsub_checkbox):
+def displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, entry_splitcoordinate_step9, entry_todisplay_step9, selected_order_step9, filter_forsub_checkbox, entry_config):
     global subtractedmics_dir
     subtractedmics_dir = entry_subtractedmics.get()
     splitcoordinatesub_dir = entry_splitcoordinate_step9.get()
@@ -20,7 +20,7 @@ def displaysub(output_text_step9, entry_subtractedmics, showcoords_checkbox, ent
     order = selected_order_step9.get()
     filterflag = filter_forsub_checkbox.get()
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    with open(entry_config.get(), 'r') as config_file:
         config = json.load(config_file)
 
     cryolo_python = config.get("cryolo_python")

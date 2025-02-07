@@ -12,14 +12,14 @@ from scipy.fft import rfftn, irfftn
 from scipy.ndimage import fourier_gaussian
 import json
 
-def displaymcf(output_text_step5, entry_mcfedmics_dir, entry_mcfcoordinate_dir, entry_todisplay_step5, selected_order_step5, filter_formcf_checkbox):
+def displaymcf(output_text_step5, entry_mcfedmics_dir, entry_mcfcoordinate_dir, entry_todisplay_step5, selected_order_step5, filter_formcf_checkbox, entry_config):
     global mcfedmics_dir
     mcfedmics_dir = entry_mcfedmics_dir.get()
     mcfcoordinate_dir = entry_mcfcoordinate_dir.get()
     order = selected_order_step5.get()
     filterflag = filter_formcf_checkbox.get()
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    with open(entry_config.get(), 'r') as config_file:
         config = json.load(config_file)
 
     cryolo_python = config.get("cryolo_python")

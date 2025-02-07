@@ -12,14 +12,14 @@ from scipy.fft import rfftn, irfftn
 from scipy.ndimage import fourier_gaussian
 import json
 
-def displaysplit(output_text_step7, entry_splitedmics_dir, entry_splitcoordinate_dir, entry_todisplay_step7, selected_order_step7, filter_forsplit_checkbox):
+def displaysplit(output_text_step7, entry_splitedmics_dir, entry_splitcoordinate_dir, entry_todisplay_step7, selected_order_step7, filter_forsplit_checkbox, entry_config):
     global splitedmics_dir
     splitedmics_dir = entry_splitedmics_dir.get()
     splitcoordinate_dir = entry_splitcoordinate_dir.get()
     order = selected_order_step7.get()
     filterflag = filter_forsplit_checkbox.get()
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    with open(entry_config.get(), 'r') as config_file:
         config = json.load(config_file)
 
     cryolo_python = config.get("cryolo_python")

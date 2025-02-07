@@ -4,13 +4,14 @@ import threading
 import os
 import glob
 import shutil
+import json
 
-def relionimport(output_text_step11a, entry_micstar11, entry_subcoords):
+def relionimport(output_text_step11a, entry_micstar11, entry_subcoords, entry_importjob):
 
     try:
         subprocess.check_output(["which", "relion"], stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
-        output_text_step11a.insert(tk.END, "Error: Relion command not found. Source relion and try again.")
+        output_text_step11a.insert(tk.END, "Error: Relion command not found. Source relion and restart Subflow.")
         output_text_step11a.see(tk.END)
         return
     if not os.path.exists("default_pipeline.star"):
@@ -29,11 +30,14 @@ def relionimport(output_text_step11a, entry_micstar11, entry_subcoords):
             output_text_step11a.see(tk.END)
             return
 
-        schemesdir = os.path.join(os.getcwd(), "Schemes")
-        if not os.path.exists(schemesdir):
-            shutil.copytree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Schemes"), schemesdir)
+        source_job_star = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Schemes", "prep", "importcoords", "job.star")
+        destination_dir = os.path.join(os.getcwd(), "Schemes", "prep", "importcoords")
+        if not os.path.exists(destination_dir):
+            os.makedirs(destination_dir)
 
-        importscheme = os.path.join(schemesdir, "prep", "importcoords", "job.star")
+        importscheme = os.path.join(destination_dir, "job.star")
+        shutil.copy(source_job_star, importscheme)
+
         with open(importscheme, 'r') as file:
             lines = file.readlines()
 
@@ -61,6 +65,9 @@ def relionimport(output_text_step11a, entry_micstar11, entry_subcoords):
 
         output_text_step11a.insert(tk.END, f"Import {importjobname} running...\n")
         output_text_step11a.see(tk.END)
+
+        entry_importjob.delete(0, tk.END)
+        entry_importjob.insert(0, importjobname)
 
         try:
 
@@ -93,12 +100,12 @@ def relionimport(output_text_step11a, entry_micstar11, entry_subcoords):
     import_thread_instance.daemon = True
     import_thread_instance.start()
 
-def relionextract(output_text_step11b, entry_micstar11, entry_importjob, entry_boxsize, entry_rescaledbox):
+def relionextract(output_text_step11b, entry_micstar11, entry_importjob, entry_boxsize, entry_rescaledbox, entry_config):
 
     try:
         subprocess.check_output(["which", "relion"], stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
-        output_text_step11b.insert(tk.END, "Error: relion command not found. Source relion and try again.")
+        output_text_step11b.insert(tk.END, "Error: Relion command not found. Source Relion and restart SUbflow.")
         output_text_step11b.see(tk.END)
         return
     if not os.path.exists("default_pipeline.star"):
@@ -124,11 +131,27 @@ def relionextract(output_text_step11b, entry_micstar11, entry_importjob, entry_b
             output_text_step11b.see(tk.END)
             return
 
-        schemesdir = os.path.join(os.getcwd(), "Schemes")
-        if not os.path.exists(schemesdir):
-            shutil.copytree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Schemes"), schemesdir)
+        source_job_star = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Schemes", "proc", "extract", "job.star")
+        destination_dir = os.path.join(os.getcwd(), "Schemes", "proc", "extract")
+        if not os.path.exists(destination_dir):
+            os.makedirs(destination_dir)
+        extractscheme = os.path.join(destination_dir, "job.star")
+        shutil.copy(source_job_star, extractscheme)
 
-        extractscheme = os.path.join(schemesdir, "proc", "extract", "job.star")
+        with open(entry_config.get(), 'r') as config_file:
+            config = json.load(config_file)
+        customjobstar = config.get("relion_extract_job")
+        
+        if customjobstar != "" and not os.path.exists(customjobstar):
+            output_text_step0.insert(tk.END, f"The job.star file does not exist: {customjobstar}\n")
+            output_text_step0.see(tk.END)
+            corr_running=False
+            stop_corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain)
+            updategui.set_update_flag("preprocess", False)
+            return
+        elif customjobstar != "":
+            shutil.copy(customjobstar, extractscheme)
+
         with open(extractscheme, 'r') as file:
             lines = file.readlines()
 

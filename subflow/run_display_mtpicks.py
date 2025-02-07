@@ -12,7 +12,7 @@ from scipy.fft import rfftn, irfftn
 from scipy.ndimage import fourier_gaussian
 import json
 
-def display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todisplay_step3, selected_order_step3, selected_picktype, filter_forpicks_checkbox):
+def display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todisplay_step3, selected_order_step3, selected_picktype, filter_forpicks_checkbox, entry_config):
     global pickedmics
     picktype = selected_picktype.get()
     picks_dir = entry_picks_dir.get()
@@ -20,7 +20,7 @@ def display(output_text_step3, entry_pickedmics_dir, entry_picks_dir, entry_todi
     order = selected_order_step3.get()
     filterflag = filter_forpicks_checkbox.get()
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    with open(entry_config.get(), 'r') as config_file:
         config = json.load(config_file)
 
     cryolo_python = config.get("cryolo_python")

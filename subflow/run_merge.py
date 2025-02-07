@@ -64,6 +64,18 @@ def submerge(output_text_step26, entry_firstsub, browse_button_firstsub, entry_s
             output_text_step26.insert(tk.END, f"\nLinked to {suboutputdir}:\n{total_secondsubs} from {secondsubdir}\n{total_onlyfirstsubs} from {firstsubdir}\n\nTotal: {totalsubmics} subtracted micrographs")
             output_text_step26.see(tk.END)
 
+            if not os.path.exists("Subflow"):
+                os.makedirs("Subflow")
+
+            todelete = [os.path.join(firstsubdir, name+"_sub.mrc") for name in firstsubmics if name in secondsubmics]
+            with open("Subflow/micrographs-to-delete.txt", "w") as f:
+                for name in todelete:
+                    f.write(name + "\n")
+
+            output_text_step26.insert(tk.END, f"\n\nYou can delete singly-subtracted micrographs that have a doubly-subtracted version. See Subflow/micrographs-to-delete.txt.")
+            output_text_step26.insert(tk.END, f"\n\nCheck the file before attempting to delete the paths (you can use \"xargs -a Subflow/micrographs-to-delete.txt rm -f\")")
+            output_text_step26.see(tk.END)
+
         except Exception as e:
 
             output_text_step26.insert(tk.END, f"Error: {str(e)}\n")
@@ -186,3 +198,58 @@ def pickmerge(output_text_step26_2, entry_firstpicks, browse_button_firstpicks, 
     mergepicks_instance = threading.Thread(target=mergepicks, name="subflow-mergepicks")
     mergepicks_instance.daemon = True
     mergepicks_instance.start()
+
+def picklink(output_text_step10b, entry_firstpicks_single, entry_outputpickmerge_single,browse_button_firstpickssingle, browse_button_outputpickmergesingle, linksingle_button):
+
+    def linkpicks():
+
+        firstpicksdir = entry_firstpicks_single.get()
+        pickoutputdir = entry_outputpickmerge_single.get()
+        
+        output_text_step10b.delete(1.0, tk.END)
+
+        if not os.path.exists(firstpicksdir):
+            output_text_step10b.insert(tk.END, f"{firstpicksdir} doesn't exist.\n")
+            output_text_step10b.see(tk.END)
+            return
+
+        if not os.path.exists(pickoutputdir):
+            output_text_step10b.insert(tk.END, f"{pickoutputdir} doesn't exist.\n")
+            output_text_step10b.see(tk.END)
+            return
+
+        entry_firstpicks_single.config(state='disabled')
+        entry_outputpickmerge_single.config(state='disabled')
+        browse_button_firstpickssingle.config(state='disabled')
+        browse_button_outputpickmergesingle.config(state='disabled')
+        linksingle_button.config(state='disabled')
+
+        output_text_step10b.insert(tk.END, f"\nLinking star files in {firstpicksdir} to {pickoutputdir}...\n")
+
+        try:
+
+            firstpicks = [os.path.basename(name) for name in os.listdir(firstpicksdir)]
+
+            for moveme in firstpicks:
+                subprocess.run(["ln", "-sf", os.path.join(os.getcwd(), firstpicksdir, moveme), os.path.join(os.getcwd(), pickoutputdir, moveme)])
+
+            total_firstpicks = "{:,}".format(len(firstpicks))
+
+            output_text_step10b.insert(tk.END, f"\nLinked {total_firstpicks} picks.\n")
+            output_text_step10b.see(tk.END)
+
+        except Exception as e:
+
+            output_text_step10b.insert(tk.END, f"Error: {str(e)}\n")
+            output_text_step10b.see(tk.END)
+
+        entry_firstpicks_single.config(state='normal')
+        entry_outputpickmerge_single.config(state='normal')
+        browse_button_firstpickssingle.config(state='normal')
+        browse_button_outputpickmergesingle.config(state='normal')
+        linksingle_button.config(state='normal')
+    
+
+    linkpicks_instance = threading.Thread(target=linkpicks, name="subflow-linkpicks")
+    linkpicks_instance.daemon = True
+    linkpicks_instance.start()

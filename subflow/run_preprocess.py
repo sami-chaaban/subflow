@@ -7,6 +7,7 @@ import glob
 import sys
 import shutil
 from subflow import updategui
+import json
 
 def disable_ui_elements(entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain):
     entry_sourcemovies.config(state='disabled')
@@ -42,7 +43,7 @@ def enable_ui_elements(entry_sourcemovies, entry_gain, entry_optics, entry_pixel
 global corr_running
 corr_running = False
 
-def corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain, notebook):
+def corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain, notebook, entry_config):
 
     output_text_step0.delete(1.0, tk.END)  # Clear previous output
 
@@ -166,8 +167,23 @@ def corr(output_text_step0, output_text_step0b, output_text_step0c, entry_source
             
         try:
 
-            if not os.path.exists(schemesdir):
-                shutil.copytree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Schemes"), schemesdir)
+            with open(entry_config.get(), 'r') as config_file:
+                config = json.load(config_file)
+
+            shutil.copytree(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Schemes"), schemesdir, dirs_exist_ok=True)
+                
+            for jobname,finalpath in zip(["relion_corr_job", "relion_ctf_job"], ["prep/motioncorr", "prep/ctffind"]):
+                customjobstar = config.get(jobname)
+                if customjobstar != "" and not os.path.exists(customjobstar):
+                    output_text_step0.insert(tk.END, f"The job.star file does not exist: {customjobstar}\n")
+                    output_text_step0.see(tk.END)
+                    corr_running=False
+                    stop_corr(output_text_step0, output_text_step0b, output_text_step0c, entry_sourcemovies, entry_gain, entry_optics, entry_pixelsize_corr, entry_voltage, entry_dose, entry_eergroups_corr, entry_gainrot, entry_gainflip, entry_mtf, corr_button, stop_corr_button, browse_button_gain)
+                    updategui.set_update_flag("preprocess", False)
+                    return
+                elif customjobstar != "":
+                    shutil.copy(customjobstar, os.path.join(schemesdir, finalpath, "job.star"))
+
             else:
                 subprocess.run(["rm", "-f", os.path.join(schemesdir, "RELION_JOB_ABORT_NOW")])
                 subprocess.run(["rm", "-f", os.path.join(importjob, "RELION_JOB_ABORT_NOW")])
@@ -193,7 +209,7 @@ def corr(output_text_step0, output_text_step0b, output_text_step0c, entry_source
                     elif "fn_in_raw" in line:
                         file.write(f"  fn_in_raw        {sourcemovies}\n")
                     elif "fn_mtf" in line:
-                        file.write(f"  fn_mtf        {mtf}\n")
+                        file.write(f"  fn_mtf        \"{mtf}\"\n")
                     else:
                         file.write(line)
 

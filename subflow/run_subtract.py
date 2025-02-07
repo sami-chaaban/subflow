@@ -57,6 +57,11 @@ class SubtractOperation:
         self.subtract_thread_instance = None
         self.output_text = None
 
+        # Keep track of the temporary directory and processes:
+        self.subtemp = None
+        self.process_lock = threading.Lock()
+        self.processes = []
+
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
             self.config = json.load(config_file)
 
@@ -68,7 +73,10 @@ class SubtractOperation:
     def subtract(self, output_text, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask,
                  radio_option_manual, radio_option_auto, entry_pixel_size, entry_mask, entry_searchstart,
                  entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub,
-                 browse_button_coordstosub, browse_button_mask, notebook, jobalias):
+                 browse_button_coordstosub, browse_button_mask, notebook, jobalias, entry_config):
+
+        with open(entry_config.get(), 'r') as config_file:
+            self.config = json.load(config_file)
 
         self.output_text = output_text
 
@@ -92,7 +100,7 @@ class SubtractOperation:
 
             output_text.delete(1.0, tk.END)
 
-            # The sync process is running
+            # The process is running
             self.subtract_running = True
             updategui.set_update_flag(jobalias, True)
             updategui.change_tabtitle(notebook, jobalias)
@@ -110,6 +118,9 @@ class SubtractOperation:
                 i += 1
                 subtemp = os.path.join("Subflow", f"temp-{jobalias}{i}")
             os.makedirs(subtemp)
+
+            # Store this temp directory so we can remove it if we stop
+            self.subtemp = subtemp
 
             self.safe_output_insert(f"Created temporary directory for subtraction files {subtemp}.\n")
 
@@ -158,20 +169,28 @@ class SubtractOperation:
 
             while not os.path.exists(coordstosub_dir):
                 time.sleep(4)
+                if not self.subtract_running:
+                    # If user stopped during this wait, clean and return
+                    if self.subtemp is not None and os.path.exists(self.subtemp):
+                        shutil.rmtree(self.subtemp, ignore_errors=True)
+                    self.safe_output_insert("\nSubtraction stopped.\n")
+                    updategui.set_update_flag(jobalias, False)
+                    return
 
-            # Use ThreadPoolExecutor to process multiple images simultaneously
+            # Use ThreadPoolExecutor to process multiple images
             with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
                 future_to_coordinate = {}
                 processed_files = set()
 
                 while self.subtract_running:
-                    # List of coordinate files to process
                     coordinate_files = [f for f in os.listdir(coordstosub_dir)
                                         if f.endswith("_resam_Zscore_helix_split.txt") and f not in processed_files]
 
                     for coordinatefile in coordinate_files:
                         if not self.subtract_running:
-                            shutil.rmtree(subtemp)
+                            # If we've stopped, remove subtemp and return
+                            if self.subtemp is not None and os.path.exists(self.subtemp):
+                                shutil.rmtree(self.subtemp, ignore_errors=True)
                             self.safe_output_insert("\nSubtraction stopped.\n")
                             updategui.set_update_flag(jobalias, False)
                             return
@@ -184,20 +203,26 @@ class SubtractOperation:
 
                         subname = coordinatefile.split("_resam_Zscore_helix_split.txt")[0] + "_sub.mrc"
                         subpath = os.path.join(suboutput_dir, subname)
-                        micsubtemp = os.path.join(subtemp, subname)  # before moving it's here
+                        micsubtemp = os.path.join(subtemp, subname)
 
                         if not os.path.exists(originpath):
                             self.safe_output_insert(f"Could not find {originpath}\n")
                             continue
 
                         if not os.path.exists(subpath):
-                            # Submit the subtraction task to the executor
-                            future = executor.submit(self.process_subtraction, origintemp, originpath, micsubtemp,
-                                                     subpath, coordstosub, mask, searchstart, searchend, subtemp)
+                            future = executor.submit(self.process_subtraction, 
+                                                     origintemp, 
+                                                     originpath, 
+                                                     micsubtemp,
+                                                     subpath, 
+                                                     coordstosub, 
+                                                     mask, 
+                                                     searchstart, 
+                                                     searchend, 
+                                                     subtemp)
                             future_to_coordinate[future] = coordinatefile
                             processed_files.add(coordinatefile)
 
-                    # Check for completed futures
                     done_futures = []
                     for future in future_to_coordinate:
                         if future.done():
@@ -210,7 +235,6 @@ class SubtractOperation:
                                 self.safe_output_insert(f"Completed processing {coordinatefile}\n")
                             done_futures.append(future)
 
-                    # Remove completed futures from the tracking dictionary
                     for future in done_futures:
                         del future_to_coordinate[future]
 
@@ -221,9 +245,10 @@ class SubtractOperation:
                     if self.subtract_running:
                         time.sleep(4)
 
-            # Clean up temporary directory after processing
-            shutil.rmtree(subtemp)
-            self.safe_output_insert("\nSubtraction completed.\n")
+            # If the loop ended normally, remove temp directory
+            if self.subtemp is not None and os.path.exists(self.subtemp):
+                shutil.rmtree(self.subtemp, ignore_errors=True)
+            self.safe_output_insert("\nSubtraction stopped.\n")
             updategui.set_update_flag(jobalias, False)
             enable_ui_elements(output_text, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask,
                                radio_option_manual, radio_option_auto, entry_pixel_size, entry_mask, entry_searchstart,
@@ -236,11 +261,11 @@ class SubtractOperation:
 
     def process_subtraction(self, origintemp, originpath, micsubtemp, subpath, coordstosub, mask, searchstart,
                             searchend, subtemp):
-        # Link the original image to a temporary location
+        # Create a symlink to the original image
         subprocess.run(["ln", "-sf", os.path.join(os.getcwd(), originpath), os.path.join(os.getcwd(), origintemp)])
-
-        try:
-            result = subprocess.run([
+        
+        # Instead of run(...), use Popen so we can kill it if needed
+        p = subprocess.Popen([
                 self.subtract_script,
                 origintemp,
                 mask,
@@ -248,38 +273,69 @@ class SubtractOperation:
                 "0",
                 searchstart,
                 searchend
-            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
 
-            stdout_output = result.stdout
-            stderr_output = result.stderr
+        # Keep track of this process so we can terminate it
+        with self.process_lock:
+            self.processes.append(p)
 
-            if result.returncode == 0:
-                self.safe_output_insert(stdout_output)
-                self.safe_output_insert(stderr_output)
+        try:
+            stdout_output, stderr_output = p.communicate()
+        finally:
+            # Remove from the process list, whether it succeeded or failed
+            with self.process_lock:
+                if p in self.processes:
+                    self.processes.remove(p)
 
-                mvcommand = f'mv {micsubtemp} {subpath}'
-                subprocess.run(mvcommand, shell=True)
+        if p.returncode == 0 and self.subtract_running:
+            self.safe_output_insert(stdout_output)
+            self.safe_output_insert(stderr_output)
 
-                self.safe_output_insert(f"Moved to {subpath}.\n")
+            mvcommand = f'mv {micsubtemp} {subpath}'
+            subprocess.run(mvcommand, shell=True)
 
-                rmcommand = f'rm -f {subtemp}/*ave*'
-                subprocess.run(rmcommand, shell=True)
+            self.safe_output_insert(f"Moved to {subpath}.\n")
 
-                self.safe_output_insert(f"Subtracted: {os.path.basename(originpath)}\n")
+            rmcommand = f'rm -f {subtemp}/*ave*'
+            subprocess.run(rmcommand, shell=True)
 
+            self.safe_output_insert(f"Subtracted: {os.path.basename(originpath)}\n")
+
+        else:
+            # If user stopped, or the process had an error, handle both
+            if not self.subtract_running:
+                # We do not necessarily print anything if it was forcibly killed,
+                # but you could add a message here if you wish
+                pass
             else:
                 self.safe_output_insert(f"Error subtracting {os.path.basename(originpath)}.\n")
                 self.safe_output_insert(stdout_output)
                 self.safe_output_insert(stderr_output)
                 self.safe_output_insert("(one possibility is that your micrographs are float16 when they shouldn't be)\n")
-        except Exception as e:
-            self.safe_output_insert(f"Error subtracting {os.path.basename(originpath)}: {str(e)}\n")
 
     def stop_subtract(self, output_text, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask,
                       radio_option_manual, radio_option_auto, entry_pixel_size, entry_mask, entry_searchstart,
                       entry_searchend, subtract_button, stop_subtract_button, browse_button_mictosub,
                       browse_button_coordstosub, browse_button_mask, jobalias):
+        # Set the flag so loops exit
         self.subtract_running = False
+
+        # Kill all running processes
+        with self.process_lock:
+            for p in self.processes:
+                if p.poll() is None:  # still running
+                    p.kill()
+            self.processes.clear()
+
+        # Remove the temporary directory if it exists
+        if self.subtemp and os.path.exists(self.subtemp):
+            shutil.rmtree(self.subtemp, ignore_errors=True)
+            self.subtemp = None
+
         self.safe_output_insert("Subtraction stopping...\n")
         enable_ui_elements(output_text, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask,
                            radio_option_manual, radio_option_auto, entry_pixel_size, entry_mask, entry_searchstart,

@@ -13,10 +13,11 @@ class MCFOperation:
         self.mcf_running = False
         self.mcf_thread_instance = None
 
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    def mcf(self, output_text, entry_coordinate_dir, entry_suffix, entry_pixel_size, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, notebook, entry_config, jobalias):
+        
+        with open(entry_config.get(), 'r') as config_file:
             self.config = json.load(config_file)
 
-    def mcf(self, output_text, entry_coordinate_dir, entry_suffix, entry_pixel_size, entry_samplestep, entry_anglechange, entry_minseed, entry_polynomial, mcf_button, stop_mcf_button, browse_coordinate_dir, entry_tomcfmics_dir, browse_button_tomcfmics, notebook, jobalias):
         mcf_script = self.config.get("mcf_script")
 
         if not os.path.exists(mcf_script):
