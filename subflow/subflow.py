@@ -4209,7 +4209,7 @@ def gui():
         entry_goodclass.insert(0, "J3-4")
         entry_goodclass.grid(row=13, column=1, padx=10, pady=3, sticky="ew")
 
-        convert_button = ttk.Button(tabs[t], text="Convert (Jnonunif)", command=lambda: cs2star(output_text_step12, entry_license, entry_host, entry_port, entry_email, entry_pass, entry_project, entry_workspacenum, entry_convertjob, entry_particles))
+        convert_button = ttk.Button(tabs[t], text="Convert (Jnonunif)", command=lambda: cs2star(output_text_step12, entry_license, entry_host, entry_port, entry_email, entry_pass, entry_project, entry_workspacenum, entry_convertjob, entry_particles, entry_config))
         convert_button.grid(row=14, column=0, columnspan=1, padx=10, pady=3, sticky="e")
 
         entry_convertjob = ttk.Entry(tabs[t], font=common_font)

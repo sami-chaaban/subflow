@@ -318,7 +318,7 @@ def csnonunif(output_text_step12, entry_license, entry_host, entry_port, entry_e
     output_text_step12.insert(tk.END, f"Running non-uniform refinement on particles_class_{goodclassnum} with volume_class_{goodclassnum}: {nurefine_job.uid}.\n")
     output_text_step12.see(tk.END)
 
-def cs2star(output_text_step12, entry_license, entry_host, entry_port, entry_email, entry_pass, entry_project, entry_workspacenum, entry_convertjob, entry_particles):
+def cs2star(output_text_step12, entry_license, entry_host, entry_port, entry_email, entry_pass, entry_project, entry_workspacenum, entry_convertjob, entry_particles, entry_config):
 
     mylicense=entry_license.get()
     myemail=entry_email.get()
@@ -328,7 +328,7 @@ def cs2star(output_text_step12, entry_license, entry_host, entry_port, entry_ema
     project_uid = entry_project.get()
     workspace_uid = entry_workspacenum.get()
 
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
+    with open(entry_config.get(), 'r') as config_file:
         config = json.load(config_file)
 
     csparc2star_python = config.get("csparc2star_python") 

@@ -35,6 +35,8 @@
 
 * Converts the particles back to Relion .star format using pyem (Asarnow et al., 2019).
 
+<img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Subtracted-example.png?raw=true" alt="Subtracted example" width="600"/>
+
 ## Installation<a name="installation"></a>
 
 * Set up a fresh conda environment with Python >= 3.9: `conda create -n subflow python=3.9`
@@ -69,11 +71,46 @@ subflow &
 
 <img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Start-link-movies.png?raw=true" alt="Start link movies" width="600"/>
 
-* Clicking twice on a tab reveals a display tab to view the resulting micrographs for that step.
+* Clicking twice on a tab toggles the following `*` display tab to view results for that step.
 
 <img src="https://github.com/sami-chaaban/subflow/blob/main/examples/Link-micrographs.png?raw=true" alt="First click" width="600"/>
 
 <img src="https://github.com/sami-chaaban/subflow/blob/main/examples/View-micrographs.png?raw=true" alt="Second click" width="600"/>
+
+**Tab Order**
+1. `SUBFLOW` — Global settings: config path, `EER` toggle, `Subtract twice` toggle, load/save parameters, start/stop all.
+1. `Link mov` — Link incoming movies into the working directory.
+1. `eer to tif` — Convert EER stacks to TIFF (run if using EER).
+1. `Preproc` — Relion import, motion correction, and CTF estimation.
+1. `Link mic` — Link corrected micrographs into `Micrographs`.
+1. `*` (Display micrographs) — QC linked micrographs.
+1. `Pick fil` — crYOLO filament picking on micrographs.
+1. `*` (Display picks) — QC filament picks.
+1. `Fit curves` — Multi-curve fitting on filament picks.
+1. `*` (Display fit) — QC fitted curves.
+1. `Split fil` — Split fitted filaments into shorter segments.
+1. `*` (Display splits) — QC split results.
+1. `Subtract` — Lattice subtraction using split filaments.
+1. `*` (Display subtraction) — QC subtracted micrographs (optionally overlay split coords).
+1. `Pick comp` — crYOLO picking of complexes on subtracted micrographs.
+1. `*` (Display comp picks) — QC complex picks.
+
+The next block appears only when `Subtract twice` is enabled in `SUBFLOW`:
+1. `Pick fil` (round 2) — Filament picking on the first subtraction.
+1. `*` (Display picks) — QC filament picks (round 2).
+1. `Fit curves` (round 2) — Curve fitting (round 2).
+1. `*` (Display fit) — QC fit results (round 2).
+1. `Split fil` (round 2) — Split filaments (round 2).
+1. `*` (Display splits) — QC split results (round 2).
+1. `Subtract` (round 2) — Second subtraction pass.
+1. `*` (Display subtraction) — QC subtracted micrographs (round 2).
+1. `Pick comp` (round 2) — Complex picking on round-2 subtractions.
+1. `*` (Display comp picks) — QC complex picks (round 2).
+
+1. `Merge` — Merge sequential subtractions and/or complex picks (used with double subtraction).
+1. `Prep star` — Fix micrograph `.star` paths to subtracted micrographs and link picks into that directory.
+1. `Extract` — Relion import + extract particles from the subtracted micrographs.
+1. `Hetero` — cryoSPARC workspace, import particles/volumes, heterogeneous refinement.
 
 ## Troubleshooting<a name="troubleshooting"></a>
 

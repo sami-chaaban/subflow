@@ -62,9 +62,6 @@ class SubtractOperation:
         self.process_lock = threading.Lock()
         self.processes = []
 
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json'), 'r') as config_file:
-            self.config = json.load(config_file)
-
     def safe_output_insert(self, text):
         if self.output_text:
             self.output_text.after(0, lambda: self.output_text.insert(tk.END, text))
