@@ -2066,7 +2066,7 @@ def gui():
         label_cryolo_model.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model = ttk.Entry(tabs[t], font=common_font)
-        entry_cryolo_model.insert(0, "/cephfs/chaaban/CryoloModels/MTs/201028_model_K3_1p11apix.h5")
+        entry_cryolo_model.insert(0, "CryoloModels/Chaaban-Carter_Cryolo_MTs_201028_K3_1p11apix.h5")
         entry_cryolo_model.grid(row=3, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_cryolo_model = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_cryolo_model))
@@ -2769,7 +2769,7 @@ def gui():
         label_cryolo_model_complex.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model_complex = ttk.Entry(tabs[t], font=common_font)
-        entry_cryolo_model_complex.insert(0, "/cephfs/chaaban/CryoloModels/cryolo_model_box580_batch3_3valid.h5")
+        entry_cryolo_model_complex.insert(0, "CryoloModels/Chaaban-Carter_Cryolo_DDA_Complex.h5")
         entry_cryolo_model_complex.grid(row=3, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_cryolo_model_complex = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_cryolo_model))
@@ -2967,7 +2967,7 @@ def gui():
         label_cryolo_model16.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model16 = ttk.Entry(tabs[t], font=common_font)
-        entry_cryolo_model16.insert(0, "/cephfs/chaaban/CryoloModels/MTs/201028_model_K3_1p11apix.h5")
+        entry_cryolo_model16.insert(0, "CryoloModels/Chaaban-Carter_Cryolo_MTs_201028_K3_1p11apix.h5")
         entry_cryolo_model16.grid(row=3, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_cryolo_model16 = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_cryolo_model16))
@@ -3676,7 +3676,7 @@ def gui():
         label_cryolo_model_complex24.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model_complex24 = ttk.Entry(tabs[t], font=common_font)
-        entry_cryolo_model_complex24.insert(0, "/cephfs/chaaban/CryoloModels/cryolo_model_box580_batch3_3valid.h5")
+        entry_cryolo_model_complex24.insert(0, "CryoloModels/Chaaban-Carter_Cryolo_DDA_Complex.h5")
         entry_cryolo_model_complex24.grid(row=3, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_cryolo_model_complex24 = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_cryolo_model))

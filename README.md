@@ -86,7 +86,7 @@ Create an editable copy of the example configuration in the current directory:
 subflow --init
 ```
 
-This creates `config.json` without changing the packaged example. Subflow refuses to overwrite the file if it already exists. To create it at a different location:
+This creates `config.json` without changing the packaged example. To create it at a different location:
 
 ```bash
 subflow --init /path/to/config.json
@@ -111,7 +111,7 @@ Edit the new file before processing. When the GUI starts from a directory contai
 
 Relion job.star files are important to include for SLURM submission that is institute-specific. Current defaults are for the MRC-LMB, but you can copy any old job.star file from an old job to get the correct `fn_motioncor2_exe`, `min_dedicated`, `nr_mpi`, `nr_thread`, `qsub`, `qsubscript`, `queuename`. Alternatively, do the preprocessing manually and use Subflow for subsequent steps.
 
-Use absolute paths in `config.json` so that the same configuration works from different project directories.
+*Use absolute paths in `config.json` so that the same configuration works from different project directories.*
 
 ## Start a project
 
@@ -247,7 +247,7 @@ This tutorial runs the on-the-fly steps on five example micrographs. Download th
 
 4. **Pick fil**
    - Set `Directory to pick` to `Micrographs`, pixel size to 1.1.
-   - Set `crYOLO model` to `Chaaban-Carter crYOLO model for MTs 201028_model_K3_1p11apix.h5`.
+   - Set `crYOLO model` to the downloaded file `Chaaban-Carter_Cryolo_MTs_201028_K3_1p11apix.h5`.
    - Click `Pick` and wait for all five micrographs to be processed.
    - Click the `Pick fil` tab twice to reveal the image display window. Click the `*` tab. (clicking `Pick fil` again hides the tab).
       - Set `Micrograph directory` to `Micrographs`.
@@ -282,7 +282,7 @@ This tutorial runs the on-the-fly steps on five example micrographs. Download th
 
 8. **Pick comp**
    - Set `Directory to pick` to `SubtractedMicrographs`, pixel size to 1.1.
-   - Set `crYOLO model` to `Chaaban-Carter crYOLO model for Complex.h5`.
+   - Set `crYOLO model` to the downloaded file `Chaaban-Carter_Cryolo_DDA_Complex.h5`.
    - Click `Pick` and wait for all five micrographs to be processed.
    - Click the `Pick comp` tab twice to reveal the image display window. Click the `*` tab. (clicking `Pick comp` again hides the tab).
       - Set `Micrograph directory` to `Micrographs`.
@@ -311,8 +311,7 @@ Check the cryoSPARC host, port, license, email, and password in the `Hetero` tab
 
 If you use Subflow, please cite the relevant manuscripts:
 
-- Subflow interface - Ennio A. d’Amico, Sami Chaaban, Ferdos Abid Ali, Leon Michalski, Andrew P. Carter
-bioRxiv 2026.04.25.720804; doi: https://doi.org/10.64898/2026.04.25.720804
+- Subflow interface - Ennio A. d’Amico, Sami Chaaban, Ferdos Abid Ali, Leon Michalski, Andrew P. Carter bioRxiv 2026.04.25.720804; doi: https://doi.org/10.64898/2026.04.25.720804
 - Multi-curve fitting and filament subtraction - Chai P, Rao Q, Zhang K. Multi-curve fitting and tubulin-lattice signal removal for structure determination of large microtubule-based motors. J Struct Biol. 2022 Dec;214(4):107897. doi: 10.1016/j.jsb.2022.107897. Epub 2022 Sep 8. PMID: 36089228; PMCID: PMC10321216.
 - Relion 5.0 - Burt, A., Toader, B., Warshamanage, R., von Kügelgen, A., Pyle, E., Zivanov, J., Kimanius, D., Bharat, T. A. M., & Scheres, S. H. W. (2024). An image processing pipeline for electron cryo-tomography in RELION-5. FEBS open bio, 14(11), 1788–1804. https://doi.org/10.1002/2211-5463.13873
 - crYOLO - Wagner, T., Merino, F., Stabrin, M., Moriya, T., Antoni, C., Apelbaum, A., Hagel, P., Sitsel, O., Raisch, T., Prumbaum, D., Quentin, D., Roderer, D., Tacke, S., Siebolds, B., Schubert, E., Shaikh, T. R., Lill, P., Gatsogiannis, C., & Raunser, S. (2019). SPHIRE-crYOLO is a fast and accurate fully automated particle picker for cryo-EM. Communications biology, 2, 218. https://doi.org/10.1038/s42003-019-0437-z
