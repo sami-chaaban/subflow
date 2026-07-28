@@ -1,5 +1,4 @@
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import find_packages, setup
 import subflow
 
 from os import path
@@ -16,7 +15,16 @@ setup(name='subflow',
       #long_description=long_description,
       #long_description_content_type='text/markdown',
       packages=find_packages(),
-      include_package_data=True,
+      include_package_data=False,
+      package_data={
+          "subflow": [
+              "config.json",
+              "*.mrc",
+              "Schemes/*.star",
+              "Schemes/*/*.star",
+              "Schemes/*/*/*.star",
+          ],
+      },
       entry_points={
           "console_scripts": [
             "subflow = subflow.__main__:main",

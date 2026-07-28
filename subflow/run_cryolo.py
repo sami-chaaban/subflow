@@ -27,7 +27,7 @@ class CryoloPickOperation:
 
         if not os.path.exists(cryolo_python):
             output_text.delete(1.0, tk.END)
-            output_text.insert(tk.END, f"Error: Cryolo does not exist: {cryolo_python}\n")
+            output_text.insert(tk.END, f"Error: crYOLO does not exist: {cryolo_python}\n")
             output_text.see(tk.END)
             return
 
@@ -291,7 +291,7 @@ class CryoloPickOperation:
 
             except subprocess.CalledProcessError as e:
                 # Display an error message if the subprocess fails
-                output_text.insert(tk.END, f"Error running Cryolo: {e.stderr}\n")
+                output_text.insert(tk.END, f"Error running crYOLO: {e.stderr}\n")
                 updategui.set_update_flag(jobalias, False)
                 output_text.see(tk.END)
                 enable_ui_elements(output_text, entry_micrographs_topick, entry_pixel_size, entry_cryolo_model, entry_threshold, entry_projectname, entry_pickname, entry_gpu, pick_button, stop_pick_button, browse_button_micrographs_topick, browse_button_cryolo_model, entry_picksubset)

@@ -150,7 +150,7 @@ class SubtractOperation:
                 newmaskpath = os.path.join("SubtractionFiles", newmaskname)
 
                 with mrcfile.new(newmaskpath, overwrite=True) as output_mrc:
-                    output_mrc.set_data(scaledmask)
+                    output_mrc.set_data(scaledmask.astype(np.float16))
 
                 self.safe_output_insert(f"Wrote {newmaskpath}.\n")
 
@@ -312,7 +312,6 @@ class SubtractOperation:
                 self.safe_output_insert(f"Error subtracting {os.path.basename(originpath)}.\n")
                 self.safe_output_insert(stdout_output)
                 self.safe_output_insert(stderr_output)
-                self.safe_output_insert("(one possibility is that your micrographs are float16 when they shouldn't be)\n")
 
     def stop_subtract(self, output_text, entry_mictosub_dir, entry_coordstosub, entry_suboutput, selected_automask,
                       radio_option_manual, radio_option_auto, entry_pixel_size, entry_mask, entry_searchstart,

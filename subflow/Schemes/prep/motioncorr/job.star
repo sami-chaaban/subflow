@@ -18,7 +18,7 @@ _rlnJobOptionValue #2
    bfactor        150 
 bin_factor          1 
 do_dose_weighting        Yes 
-do_float16         No 
+do_float16         Yes 
 do_own_motioncor        Yes 
   do_queue        Yes 
 do_save_noDW         No 

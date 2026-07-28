@@ -882,14 +882,14 @@ def gui():
                     writeandshow(paramsdict["output_text_hq"], f"Micrographs (motion corrected) : {paramsdict['entry_corrmics'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrographs directory to pick : {paramsdict['entry_micrographs_topick'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Pixel size (picking) : {paramsdict['entry_pixel_size'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo model : {paramsdict['entry_cryolo_model'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO model : {paramsdict['entry_cryolo_model'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Threshold : {paramsdict['entry_threshold'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo subdirectory name : {paramsdict['entry_projectname'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo picking job name : {paramsdict['entry_pickname'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO subdirectory name : {paramsdict['entry_projectname'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO picking job name : {paramsdict['entry_pickname'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"GPU : {paramsdict['entry_gpu'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Subset : {paramsdict['entry_picksubset'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph directory (picked) : {paramsdict['entry_pickedmics_dir'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo picking directory : {paramsdict['entry_picks_dir'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO picking directory : {paramsdict['entry_picks_dir'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Display : {paramsdict['entry_todisplay_step3'].get()}\n")
                     
                     if paramsdict["selected_picktype"].get() == "STAR":
@@ -897,7 +897,7 @@ def gui():
                     elif paramsdict["selected_picktype"].get() == "CBOX":
                         writeandshow(paramsdict["output_text_hq"], f"Filetype : CBOX\n")
                     
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo STAR output : {paramsdict['entry_coordinate_dir'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO STAR output : {paramsdict['entry_coordinate_dir'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph suffix (for MCF) : {paramsdict['entry_suffix_step4'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Pixel size (MCF) : {paramsdict['entry_pixel_size_step4'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Step size (Å) : {paramsdict['entry_samplestep'].get()}\n")
@@ -927,10 +927,10 @@ def gui():
                     
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph directory (after subtraction, to pick) : {paramsdict['entry_submicrographs_topick'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Pixel size (complex picking) : {paramsdict['entry_pixel_size_subpick'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo model (complex picking) : {paramsdict['entry_cryolo_model_complex'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO model (complex picking) : {paramsdict['entry_cryolo_model_complex'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Threshold (complex picking) : {paramsdict['entry_threshold_complex'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo subdirectory name (complex picking) : {paramsdict['entry_projectname_complex'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo picking job name (complex picking) : {paramsdict['entry_pickname_complex'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO subdirectory name (complex picking) : {paramsdict['entry_projectname_complex'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO picking job name (complex picking) : {paramsdict['entry_pickname_complex'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"GPU (complex picking) : {paramsdict['entry_gpu_complex'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Subset (complex picking) : {paramsdict['entry_picksubset_complex'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrographs (complex picking) : {paramsdict['entry_complex_pickedmics_dir'].get()}\n")
@@ -938,15 +938,15 @@ def gui():
 
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph directory to pick #2 : {paramsdict['entry_micrographs_topick16'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Pixel size (picking) #2 : {paramsdict['entry_pixel_size16'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo model #2 : {paramsdict['entry_cryolo_model16'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO model #2 : {paramsdict['entry_cryolo_model16'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Threshold #2 : {paramsdict['entry_threshold16'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo subdirectory name #2 : {paramsdict['entry_projectname16'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo picking job name #2 : {paramsdict['entry_pickname16'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO subdirectory name #2 : {paramsdict['entry_projectname16'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO picking job name #2 : {paramsdict['entry_pickname16'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"GPU #2 : {paramsdict['entry_gpu16'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Subset #2 : {paramsdict['entry_picksubset16'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph directory (picked) #2 : {paramsdict['entry_pickedmics_dir17'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo picking directory #2 : {paramsdict['entry_picks_dir17'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo STAR output #2 : {paramsdict['entry_coordinate_dir18'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO picking directory #2 : {paramsdict['entry_picks_dir17'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO STAR output #2 : {paramsdict['entry_coordinate_dir18'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph suffix (for MCF) #2 : {paramsdict['entry_suffix_step18'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Pixel size (MCF) #2 : {paramsdict['entry_pixel_size_step18'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Step size (Å) #2 : {paramsdict['entry_samplestep18'].get()}\n")
@@ -976,10 +976,10 @@ def gui():
                     
                     writeandshow(paramsdict["output_text_hq"], f"Micrograph directory (after subtraction, to pick) #2 : {paramsdict['entry_submicrographs_topick24'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Pixel size (complex picking) #2 : {paramsdict['entry_pixel_size_subpick24'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo model (complex picking) #2 : {paramsdict['entry_cryolo_model_complex24'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO model (complex picking) #2 : {paramsdict['entry_cryolo_model_complex24'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Threshold (complex picking) #2 : {paramsdict['entry_threshold_complex24'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo subdirectory name (complex picking) #2 : {paramsdict['entry_projectname_complex24'].get()}\n")
-                    writeandshow(paramsdict["output_text_hq"], f"Cryolo picking job name (complex picking) #2 : {paramsdict['entry_pickname_complex24'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO subdirectory name (complex picking) #2 : {paramsdict['entry_projectname_complex24'].get()}\n")
+                    writeandshow(paramsdict["output_text_hq"], f"crYOLO picking job name (complex picking) #2 : {paramsdict['entry_pickname_complex24'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"GPU (complex picking) #2 : {paramsdict['entry_gpu_complex24'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Subset (complex picking) #2 : {paramsdict['entry_picksubset_complex24'].get()}\n")
                     writeandshow(paramsdict["output_text_hq"], f"Micrographs (complex picking) #2 : {paramsdict['entry_complex_pickedmics_dir25'].get()}\n")
@@ -1052,6 +1052,8 @@ def gui():
         for line in lines:
             pipeline_param, pipeline_value = line.split(" : ")
             pipeline_value = pipeline_value.strip("\n")
+            if pipeline_param.startswith("Cryolo "):
+                pipeline_param = "crYOLO " + pipeline_param.removeprefix("Cryolo ")
 
             if pipeline_param == "Configuration":
                 paramsdict["entry_config"].delete(0, tk.END)
@@ -1155,16 +1157,16 @@ def gui():
             elif pipeline_param ==  "Pixel size (picking)":
                 paramsdict["entry_pixel_size"].delete(0, tk.END)
                 paramsdict["entry_pixel_size"].insert(0, pipeline_value)   
-            elif pipeline_param ==  "Cryolo model":
+            elif pipeline_param ==  "crYOLO model":
                 paramsdict["entry_cryolo_model"].delete(0, tk.END)
                 paramsdict["entry_cryolo_model"].insert(0, pipeline_value)
             elif pipeline_param ==  "Threshold":
                 paramsdict["entry_threshold"].delete(0, tk.END)
                 paramsdict["entry_threshold"].insert(0, pipeline_value)   
-            elif pipeline_param ==  "Cryolo subdirectory name":
+            elif pipeline_param ==  "crYOLO subdirectory name":
                 paramsdict["entry_projectname"].delete(0, tk.END)
                 paramsdict["entry_projectname"].insert(0, pipeline_value) 
-            elif pipeline_param ==  "Cryolo picking job name":
+            elif pipeline_param ==  "crYOLO picking job name":
                 paramsdict["entry_pickname"].delete(0, tk.END)
                 paramsdict["entry_pickname"].insert(0, pipeline_value)  
             elif pipeline_param ==  "GPU":
@@ -1176,7 +1178,7 @@ def gui():
             elif pipeline_param ==  "Micrograph directory (picked)":
                 paramsdict["entry_pickedmics_dir"].delete(0, tk.END)
                 paramsdict["entry_pickedmics_dir"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo picking directory":
+            elif pipeline_param ==  "crYOLO picking directory":
                 paramsdict["entry_picks_dir"].delete(0, tk.END)
                 paramsdict["entry_picks_dir"].insert(0, pipeline_value) 
             elif pipeline_param ==  "Display":
@@ -1184,7 +1186,7 @@ def gui():
                 paramsdict["entry_todisplay_step3"].insert(0, pipeline_value)
             elif pipeline_param ==  "Filetype":
                 paramsdict["selected_picktype"].set(pipeline_value)
-            elif pipeline_param ==  "Cryolo STAR output":
+            elif pipeline_param ==  "crYOLO STAR output":
                 paramsdict["entry_coordinate_dir"].delete(0, tk.END)
                 paramsdict["entry_coordinate_dir"].insert(0, pipeline_value)
             elif pipeline_param ==  "Micrograph suffix (for MCF)":
@@ -1263,16 +1265,16 @@ def gui():
             elif pipeline_param ==  "Pixel size (complex picking)":
                 paramsdict["entry_pixel_size_subpick"].delete(0, tk.END)
                 paramsdict["entry_pixel_size_subpick"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo model (complex picking)":
+            elif pipeline_param ==  "crYOLO model (complex picking)":
                 paramsdict["entry_cryolo_model_complex"].delete(0, tk.END)
                 paramsdict["entry_cryolo_model_complex"].insert(0, pipeline_value)
             elif pipeline_param ==  "Threshold (complex picking)":
                 paramsdict["entry_threshold_complex"].delete(0, tk.END)
                 paramsdict["entry_threshold_complex"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo subdirectory name (complex picking)":
+            elif pipeline_param ==  "crYOLO subdirectory name (complex picking)":
                 paramsdict["entry_projectname_complex"].delete(0, tk.END)
                 paramsdict["entry_projectname_complex"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo picking job name (complex picking)":
+            elif pipeline_param ==  "crYOLO picking job name (complex picking)":
                 paramsdict["entry_pickname_complex"].delete(0, tk.END)
                 paramsdict["entry_pickname_complex"].insert(0, pipeline_value)
             elif pipeline_param ==  "GPU (complex picking)":
@@ -1296,16 +1298,16 @@ def gui():
             elif pipeline_param ==  "Pixel size (picking) #2":
                 paramsdict["entry_pixel_size16"].delete(0, tk.END)
                 paramsdict["entry_pixel_size16"].insert(0, pipeline_value)   
-            elif pipeline_param ==  "Cryolo model #2":
+            elif pipeline_param ==  "crYOLO model #2":
                 paramsdict["entry_cryolo_model16"].delete(0, tk.END)
                 paramsdict["entry_cryolo_model16"].insert(0, pipeline_value)
             elif pipeline_param ==  "Threshold #2":
                 paramsdict["entry_threshold16"].delete(0, tk.END)
                 paramsdict["entry_threshold16"].insert(0, pipeline_value)   
-            elif pipeline_param ==  "Cryolo subdirectory name #2":
+            elif pipeline_param ==  "crYOLO subdirectory name #2":
                 paramsdict["entry_projectname16"].delete(0, tk.END)
                 paramsdict["entry_projectname16"].insert(0, pipeline_value) 
-            elif pipeline_param ==  "Cryolo picking job name #2":
+            elif pipeline_param ==  "crYOLO picking job name #2":
                 paramsdict["entry_pickname16"].delete(0, tk.END)
                 paramsdict["entry_pickname16"].insert(0, pipeline_value)  
             elif pipeline_param ==  "GPU #2":
@@ -1317,10 +1319,10 @@ def gui():
             elif pipeline_param ==  "Micrograph directory (picked) #2":
                 paramsdict["entry_pickedmics_dir17"].delete(0, tk.END)
                 paramsdict["entry_pickedmics_dir17"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo picking directory #2":
+            elif pipeline_param ==  "crYOLO picking directory #2":
                 paramsdict["entry_picks_dir17"].delete(0, tk.END)
                 paramsdict["entry_picks_dir17"].insert(0, pipeline_value) 
-            elif pipeline_param ==  "Cryolo STAR output #2":
+            elif pipeline_param ==  "crYOLO STAR output #2":
                 paramsdict["entry_coordinate_dir18"].delete(0, tk.END)
                 paramsdict["entry_coordinate_dir18"].insert(0, pipeline_value)
             elif pipeline_param ==  "Micrograph suffix (for MCF) #2":
@@ -1399,16 +1401,16 @@ def gui():
             elif pipeline_param ==  "Pixel size (complex picking) #2":
                 paramsdict["entry_pixel_size_subpick24"].delete(0, tk.END)
                 paramsdict["entry_pixel_size_subpick24"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo model (complex picking) #2":
+            elif pipeline_param ==  "crYOLO model (complex picking) #2":
                 paramsdict["entry_cryolo_model_complex24"].delete(0, tk.END)
                 paramsdict["entry_cryolo_model_complex24"].insert(0, pipeline_value)
             elif pipeline_param ==  "Threshold (complex picking) #2":
                 paramsdict["entry_threshold_complex24"].delete(0, tk.END)
                 paramsdict["entry_threshold_complex24"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo subdirectory name (complex picking) #2":
+            elif pipeline_param ==  "crYOLO subdirectory name (complex picking) #2":
                 paramsdict["entry_projectname_complex24"].delete(0, tk.END)
                 paramsdict["entry_projectname_complex24"].insert(0, pipeline_value)
-            elif pipeline_param ==  "Cryolo picking job name (complex picking) #2":
+            elif pipeline_param ==  "crYOLO picking job name (complex picking) #2":
                 paramsdict["entry_pickname_complex24"].delete(0, tk.END)
                 paramsdict["entry_pickname_complex24"].insert(0, pipeline_value)
             elif pipeline_param ==  "GPU (complex picking) #2":
@@ -1544,7 +1546,9 @@ def gui():
     label_config.grid(row=2, column=0, padx=10, pady=3, sticky="e")
 
     entry_config = ttk.Entry(tabs[0], font=common_font)
-    entry_config.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json"))
+    project_config = os.path.abspath("config.json")
+    packaged_config = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
+    entry_config.insert(0, project_config if os.path.isfile(project_config) else packaged_config)
     entry_config.grid(row=2, column=1, padx=10, pady=3, sticky="ew")
 
     ###browse button moved below output
@@ -2038,7 +2042,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step2 = ttk.Label(tabs[t], text="Pick with Cryolo", style="title.TLabel")
+        label_step2 = ttk.Label(tabs[t], text="Pick with crYOLO", style="title.TLabel")
         label_step2.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_micrographs_topick = ttk.Label(tabs[t], text="Directory to pick")
@@ -2058,7 +2062,7 @@ def gui():
         #entry_pixel_size.insert(0, globalpixelsize)
         entry_pixel_size.grid(row=2, column=1, padx=10, pady=2, sticky="ew")
 
-        label_cryolo_model = ttk.Label(tabs[t], text="Cryolo model")
+        label_cryolo_model = ttk.Label(tabs[t], text="crYOLO model")
         label_cryolo_model.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model = ttk.Entry(tabs[t], font=common_font)
@@ -2075,7 +2079,7 @@ def gui():
         entry_threshold.insert(0, "0.2")
         entry_threshold.grid(row=4, column=1, padx=10, pady=2, sticky="ew")
 
-        label_projectname = ttk.Label(tabs[t], text="Cryolo subdirectory")
+        label_projectname = ttk.Label(tabs[t], text="crYOLO subdirectory")
         label_projectname.grid(row=5, column=0, padx=10, pady=2, sticky="e")
 
         entry_projectname = ttk.Entry(tabs[t], font=common_font)
@@ -2138,7 +2142,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step3 = ttk.Label(tabs[t], text="Display the Cryolo picks", style="title.TLabel")
+        label_step3 = ttk.Label(tabs[t], text="Display the crYOLO picks", style="title.TLabel")
         label_step3.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_pickedmics_dir = ttk.Label(tabs[t], text="Micrograph directory")
@@ -2151,7 +2155,7 @@ def gui():
         browse_button_pickedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_pickedmics_dir))
         browse_button_pickedmics.grid(row=1, column=2, padx=10, pady=2)
 
-        label_picks_dir = ttk.Label(tabs[t], text="Cryolo picking directory")
+        label_picks_dir = ttk.Label(tabs[t], text="crYOLO picking directory")
         label_picks_dir.grid(row=2, column=0, padx=10, pady=2, sticky="e")
 
         entry_picks_dir = ttk.Entry(tabs[t], font=common_font)
@@ -2235,7 +2239,7 @@ def gui():
         label_step4 = ttk.Label(tabs[t], text="Multi-Curve-Fitting", style="title.TLabel")
         label_step4.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
-        label_coordinate_dir = ttk.Label(tabs[t], text="Cryolo STAR output")
+        label_coordinate_dir = ttk.Label(tabs[t], text="crYOLO STAR output")
         label_coordinate_dir.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
         entry_coordinate_dir = ttk.Entry(tabs[t], textvariable=typedpickdir, font=common_font)
@@ -2595,7 +2599,7 @@ def gui():
         label_mask.grid(row=6, column=0, padx=10, pady=2, sticky="e")
 
         entry_mask = ttk.Entry(tabs[t], font=common_font)
-        entry_mask.insert(0, "/cephfs2/chaaban/gui/MT-290A_mask_angpix1p1A_box364X36.mrc")
+        entry_mask.insert(0, "/path/to/mask.mrc")
         entry_mask.grid(row=6, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_mask = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_mask))
@@ -2743,7 +2747,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step11 = ttk.Label(tabs[t], text="Pick with Cryolo", style="title.TLabel")
+        label_step11 = ttk.Label(tabs[t], text="Pick with crYOLO", style="title.TLabel")
         label_step11.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_submicrographs_topick = ttk.Label(tabs[t], text="Micrographs directory to pick")
@@ -2761,7 +2765,7 @@ def gui():
         entry_pixel_size_subpick = ttk.Entry(tabs[t], textvariable=typedpixelsize, font=common_font)
         entry_pixel_size_subpick.grid(row=2, column=1, padx=10, pady=2, sticky="ew")
 
-        label_cryolo_model_complex = ttk.Label(tabs[t], text="Cryolo model")
+        label_cryolo_model_complex = ttk.Label(tabs[t], text="crYOLO model")
         label_cryolo_model_complex.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model_complex = ttk.Entry(tabs[t], font=common_font)
@@ -2778,14 +2782,14 @@ def gui():
         entry_threshold_complex.insert(0, "0.28")
         entry_threshold_complex.grid(row=4, column=1, padx=10, pady=2, sticky="ew")
 
-        label_projectname_complex = ttk.Label(tabs[t], text="Cryolo subdirectory name")
+        label_projectname_complex = ttk.Label(tabs[t], text="crYOLO subdirectory name")
         label_projectname_complex.grid(row=5, column=0, padx=10, pady=2, sticky="e")
 
         entry_projectname_complex = ttk.Entry(tabs[t], font=common_font)
         entry_projectname_complex.insert(0, "Complex")
         entry_projectname_complex.grid(row=5, column=1, padx=10, pady=2, sticky="ew")
 
-        label_pickname_complex = ttk.Label(tabs[t], text="Cryolo picking job name")
+        label_pickname_complex = ttk.Label(tabs[t], text="crYOLO picking job name")
         label_pickname_complex.grid(row=6, column=0, padx=10, pady=2, sticky="e")
 
         entry_pickname_complex = ttk.Entry(tabs[t], font=common_font)
@@ -2847,7 +2851,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step12 = ttk.Label(tabs[t], text="Display the Cryolo picks", style="title.TLabel")
+        label_step12 = ttk.Label(tabs[t], text="Display the crYOLO picks", style="title.TLabel")
         label_step12.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_complex_pickedmics_dir = ttk.Label(tabs[t], text="Micrograph directory")
@@ -2860,7 +2864,7 @@ def gui():
         browse_button_complex_pickedmics = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_complex_pickedmics_dir))
         browse_button_complex_pickedmics.grid(row=1, column=2, padx=10, pady=2)
 
-        label_complex_picks_dir = ttk.Label(tabs[t], text="Cryolo picking directory")
+        label_complex_picks_dir = ttk.Label(tabs[t], text="crYOLO picking directory")
         label_complex_picks_dir.grid(row=2, column=0, padx=10, pady=2, sticky="e")
 
         entry_complex_picks_dir = ttk.Entry(tabs[t], font=common_font)
@@ -2917,7 +2921,7 @@ def gui():
         filter_forcomplex_checkbox_button = tk.Checkbutton(tabs[t], variable=filter_forcomplex_checkbox)
         filter_forcomplex_checkbox_button.grid(row=9, column=1, padx=10, pady=3, sticky="w")
 
-        display_complex_picks_button = ttk.Button(tabs[t], text="Display picks", command=lambda: displaycomplex(output_text_step12, entry_complex_pickedmics_dir, entry_complex_picks_dir, entry_todisplay_step12, selected_order_step12, selected_complex_picktype, filter_forcomplex_checkbox))
+        display_complex_picks_button = ttk.Button(tabs[t], text="Display picks", command=lambda: displaycomplex(output_text_step12, entry_complex_pickedmics_dir, entry_complex_picks_dir, entry_todisplay_step12, selected_order_step12, selected_complex_picktype, filter_forcomplex_checkbox, entry_config))
         display_complex_picks_button.grid(row=10, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step12 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -2939,7 +2943,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step16 = ttk.Label(tabs[t], text="Pick with Cryolo", style="title.TLabel")
+        label_step16 = ttk.Label(tabs[t], text="Pick with crYOLO", style="title.TLabel")
         label_step16.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_micrographs_topick16 = ttk.Label(tabs[t], text="Directory to pick")
@@ -2959,7 +2963,7 @@ def gui():
         #entry_pixel_size.insert(0, globalpixelsize)
         entry_pixel_size16.grid(row=2, column=1, padx=10, pady=2, sticky="ew")
 
-        label_cryolo_model16 = ttk.Label(tabs[t], text="Cryolo model")
+        label_cryolo_model16 = ttk.Label(tabs[t], text="crYOLO model")
         label_cryolo_model16.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model16 = ttk.Entry(tabs[t], font=common_font)
@@ -2976,7 +2980,7 @@ def gui():
         entry_threshold16.insert(0, "0.2")
         entry_threshold16.grid(row=4, column=1, padx=10, pady=2, sticky="ew")
 
-        label_projectname = ttk.Label(tabs[t], text="Cryolo subdirectory")
+        label_projectname = ttk.Label(tabs[t], text="crYOLO subdirectory")
         label_projectname.grid(row=5, column=0, padx=10, pady=2, sticky="e")
 
         entry_projectname16 = ttk.Entry(tabs[t], font=common_font)
@@ -3039,7 +3043,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step17 = ttk.Label(tabs[t], text="Display the Cryolo picks", style="title.TLabel")
+        label_step17 = ttk.Label(tabs[t], text="Display the crYOLO picks", style="title.TLabel")
         label_step17.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_pickedmics_dir17 = ttk.Label(tabs[t], text="Micrograph directory")
@@ -3052,7 +3056,7 @@ def gui():
         browse_button_pickedmics17 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_pickedmics_dir17))
         browse_button_pickedmics17.grid(row=1, column=2, padx=10, pady=2)
 
-        label_picks_dir17 = ttk.Label(tabs[t], text="Cryolo picking directory")
+        label_picks_dir17 = ttk.Label(tabs[t], text="crYOLO picking directory")
         label_picks_dir17.grid(row=2, column=0, padx=10, pady=2, sticky="e")
 
         entry_picks_dir17 = ttk.Entry(tabs[t], font=common_font)
@@ -3134,7 +3138,7 @@ def gui():
         label_step18 = ttk.Label(tabs[t], text="Multi-Curve-Fitting", style="title.TLabel")
         label_step18.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
-        label_coordinate_dir18 = ttk.Label(tabs[t], text="Cryolo STAR output")
+        label_coordinate_dir18 = ttk.Label(tabs[t], text="crYOLO STAR output")
         label_coordinate_dir18.grid(row=1, column=0, padx=10, pady=2, sticky="e")
 
         entry_coordinate_dir18 = ttk.Entry(tabs[t], textvariable=typedpickdir2, font=common_font)
@@ -3502,7 +3506,7 @@ def gui():
         label_mask22.grid(row=6, column=0, padx=10, pady=2, sticky="e")
 
         entry_mask22 = ttk.Entry(tabs[t], font=common_font)
-        entry_mask22.insert(0, "/cephfs2/chaaban/gui/MT-290A_mask_angpix1p1A_box364X36.mrc")
+        entry_mask22.insert(0, "/path/to/mask.mrc")
         entry_mask22.grid(row=6, column=1, padx=10, pady=2, sticky="ew")
 
         browse_button_mask22 = ttk.Button(tabs[t], text="...", command=lambda: browse_file(entry_mask22))
@@ -3650,7 +3654,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step24 = ttk.Label(tabs[t], text="Pick with Cryolo", style="title.TLabel")
+        label_step24 = ttk.Label(tabs[t], text="Pick with crYOLO", style="title.TLabel")
         label_step24.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_submicrographs_topick24 = ttk.Label(tabs[t], text="Micrographs directory to pick")
@@ -3668,7 +3672,7 @@ def gui():
         entry_pixel_size_subpick24 = ttk.Entry(tabs[t], textvariable=typedpixelsize, font=common_font)
         entry_pixel_size_subpick24.grid(row=2, column=1, padx=10, pady=2, sticky="ew")
 
-        label_cryolo_model_complex24 = ttk.Label(tabs[t], text="Cryolo model")
+        label_cryolo_model_complex24 = ttk.Label(tabs[t], text="crYOLO model")
         label_cryolo_model_complex24.grid(row=3, column=0, padx=10, pady=2, sticky="e")
 
         entry_cryolo_model_complex24 = ttk.Entry(tabs[t], font=common_font)
@@ -3685,14 +3689,14 @@ def gui():
         entry_threshold_complex24.insert(0, "0.28")
         entry_threshold_complex24.grid(row=4, column=1, padx=10, pady=2, sticky="ew")
 
-        label_projectname_complex24 = ttk.Label(tabs[t], text="Cryolo subdirectory name")
+        label_projectname_complex24 = ttk.Label(tabs[t], text="crYOLO subdirectory name")
         label_projectname_complex24.grid(row=5, column=0, padx=10, pady=2, sticky="e")
 
         entry_projectname_complex24 = ttk.Entry(tabs[t], font=common_font)
         entry_projectname_complex24.insert(0, "Complex-round2")
         entry_projectname_complex24.grid(row=5, column=1, padx=10, pady=2, sticky="ew")
 
-        label_pickname_complex24 = ttk.Label(tabs[t], text="Cryolo picking job name")
+        label_pickname_complex24 = ttk.Label(tabs[t], text="crYOLO picking job name")
         label_pickname_complex24.grid(row=6, column=0, padx=10, pady=2, sticky="e")
 
         entry_pickname_complex24 = ttk.Entry(tabs[t], font=common_font)
@@ -3754,7 +3758,7 @@ def gui():
 
     if len(tabs) > t:
 
-        label_step25 = ttk.Label(tabs[t], text="Display the Cryolo picks", style="title.TLabel")
+        label_step25 = ttk.Label(tabs[t], text="Display the crYOLO picks", style="title.TLabel")
         label_step25.grid(row=0, column=0, columnspan=2, padx=10, pady=20)
 
         label_complex_pickedmics_dir25 = ttk.Label(tabs[t], text="Micrograph directory")
@@ -3767,7 +3771,7 @@ def gui():
         browse_button_complex_pickedmics25 = ttk.Button(tabs[t], text="...", command=lambda: browse_directory(entry_complex_pickedmics_dir25))
         browse_button_complex_pickedmics25.grid(row=1, column=2, padx=10, pady=2)
 
-        label_complex_picks_dir25 = ttk.Label(tabs[t], text="Cryolo picking directory")
+        label_complex_picks_dir25 = ttk.Label(tabs[t], text="crYOLO picking directory")
         label_complex_picks_dir25.grid(row=2, column=0, padx=10, pady=2, sticky="e")
 
         entry_complex_picks_dir25 = ttk.Entry(tabs[t], font=common_font)
@@ -3824,7 +3828,7 @@ def gui():
         filter_forcomplex_checkbox_button25 = tk.Checkbutton(tabs[t], variable=filter_forcomplex_checkbox25)
         filter_forcomplex_checkbox_button25.grid(row=9, column=1, padx=10, pady=3, sticky="w")
 
-        display_complex_picks_button25 = ttk.Button(tabs[t], text="Display picks", command=lambda: displaycomplex(output_text_step25, entry_complex_pickedmics_dir25, entry_complex_picks_dir25, entry_todisplay_step25, selected_order_step25, selected_complex_picktype25, filter_forcomplex_checkbox25))
+        display_complex_picks_button25 = ttk.Button(tabs[t], text="Display picks", command=lambda: displaycomplex(output_text_step25, entry_complex_pickedmics_dir25, entry_complex_picks_dir25, entry_todisplay_step25, selected_order_step25, selected_complex_picktype25, filter_forcomplex_checkbox25, entry_config))
         display_complex_picks_button25.grid(row=10, column=0, columnspan=2, padx=10, pady=5)
 
         output_text_step25 = tk.Text(tabs[t], height=5, width=40, font=output_font)
@@ -4128,8 +4132,7 @@ def gui():
         label_license.grid(row=2, column=0, padx=10, pady=3, sticky="e")
 
         entry_license = ttk.Entry(tabs[t], font=common_font)
-        entry_license.insert(0, "9e024538-d7a7-11ed-ab66-33a6c3f6abfb")
-        #entry_license.insert(0, "XXXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX")
+        entry_license.insert(0, "XXXXXXXX-XXXX-XXXX-XXXXX-XXXXXXXXXXXX")
         entry_license.grid(row=2, column=1, padx=10, pady=3, sticky="ew")
 
         label_host = ttk.Label(tabs[t], text="Host")
@@ -4150,14 +4153,14 @@ def gui():
         label_email.grid(row=5, column=0, padx=10, pady=3, sticky="e")
 
         entry_email = ttk.Entry(tabs[t], font=common_font)
-        entry_email.insert(0, "chaaban@mrc-lmb.cam.ac.uk")
+        entry_email.insert(0, "XXXX@XXX.com")
         entry_email.grid(row=5, column=1, padx=10, pady=3, sticky="ew")
 
         label_pass = ttk.Label(tabs[t], text="Password")
         label_pass.grid(row=6, column=0, padx=10, pady=3, sticky="e")
 
         entry_pass = ttk.Entry(tabs[t], font=common_font, show="*")
-        entry_pass.insert(0, "xxxxxxxx")
+        entry_pass.insert(0, "XXXXXXXX")
         entry_pass.grid(row=6, column=1, padx=10, pady=3, sticky="ew")
 
         label_project = ttk.Label(tabs[t], text="Project UID")
@@ -4500,7 +4503,7 @@ def gui():
         ok_button.pack(pady=5)
 
     def on_delete():
-        custom_message_box(root, "Exit Confirmation", "Did you kill all GPU jobs?\n(Motion correction, CTF estimation, Cryolo picking)\n\n Did you kill all mpirun jobs?\n(EER conversion).")
+        custom_message_box(root, "Exit Confirmation", "Did you kill all GPU jobs?\n(Motion correction, CTF estimation, crYOLO picking)\n\n Did you kill all mpirun jobs?\n(EER conversion).")
 
     root.protocol("WM_DELETE_WINDOW", on_delete)
 
